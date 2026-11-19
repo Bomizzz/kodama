@@ -124,12 +124,15 @@ button.secondary:hover:enabled { background: #eedce1; }
   border-radius: 20px;
   background: radial-gradient(ellipse at 50% 65%, #fffaf2, #f0dce2);
 }
-.mascot { width: 80px; image-rendering: pixelated; mix-blend-mode: multiply; animation: mascot-hover 3.4s ease-in-out infinite; }
+.mascot { width: 80px; image-rendering: pixelated; mix-blend-mode: multiply; animation: mascot-hover 3s ease-in-out infinite; }
 @keyframes mascot-hover {
-  0%, 100% { transform: translateY(4px) rotate(-3deg); }
-  50% { transform: translateY(-11px) rotate(3deg); }
+  0%, 100% { transform: translate(0, 9px) rotate(-7deg); }
+  50% { transform: translate(7px, -17px) rotate(7deg); }
 }
 @media (prefers-reduced-motion: reduce) { .mascot { animation: none; } }
+.mascot-stage[data-motion="on"] .mascot { animation: mascot-hover 3s ease-in-out infinite; }
+.mascot-stage[data-motion="off"] .mascot { animation: none; }
+#mascot-motion { display: block; width: auto; margin: -12px 0 14px auto; min-height: 44px; padding: 6px 12px; font-size: .83rem; }
 details { border-bottom: 1px solid var(--line); padding: 10px 2px; }
 summary { cursor: pointer; font-weight: 650; min-height: 28px; }
 .video-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 12px 0 4px; }
@@ -207,7 +210,7 @@ dd { margin: 0 0 8px; }
   <button type="button" data-view="profile">Perfil</button>
 </nav>
 <section id="home" data-screen>
-  <div class="mascot-stage"><img class="mascot" src="Capturadepantalla2026-02-18045839.png" alt="Fantasma de Kodama"></div>
+  <div class="mascot-stage"><img class="mascot" src="Capturadepantalla2026-02-18045839.png" alt="Fantasma de Kodama"></div><button type="button" class="secondary" id="mascot-motion">Animar fantasma</button>
   <div class="resources">
     <details class="video-library">
   <summary>Videos</summary>
@@ -308,6 +311,21 @@ document.querySelectorAll('[data-access]').forEach(button => {
     document.getElementById(button.dataset.access).querySelector('button, input')?.focus();
   });
 });
+const mascotStage = document.querySelector('.mascot-stage');
+const mascotMotion = document.querySelector('#mascot-motion');
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+function mascotIsMoving() {
+  return mascotStage.dataset.motion ? mascotStage.dataset.motion === 'on' : !reducedMotion.matches;
+}
+function updateMascotControl() {
+  mascotMotion.textContent = mascotIsMoving() ? 'Pausar fantasma' : 'Animar fantasma';
+}
+mascotMotion.addEventListener('click', () => {
+  mascotStage.dataset.motion = mascotIsMoving() ? 'off' : 'on';
+  updateMascotControl();
+});
+reducedMotion.addEventListener('change', updateMascotControl);
+updateMascotControl();
 const videoButtons = document.querySelectorAll('[data-youtube]');
 function resetVideos() {
   for (const button of videoButtons) {
@@ -513,6 +531,7 @@ start().then(() => { login.querySelector('button').disabled = false; })
   .catch(error => { status.textContent = error.message; });
 </script>
 </html>
+
 
 
 
