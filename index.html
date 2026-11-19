@@ -1,0 +1,126 @@
+﻿<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kodama · Acceso</title>
+<style>
+*{box-sizing:border-box} body{margin:0;background:#e8efe7;color:#193b2c;font:16px system-ui,sans-serif;min-height:100dvh;display:grid;place-items:center;padding:24px}
+main{width:min(100%,920px);display:grid;grid-template-columns:1fr 1fr;background:#fff;border-radius:26px;overflow:hidden;box-shadow:0 24px 80px #17352524}
+header{background:#143b2b;color:#eff7e9;padding:55px 42px;display:flex;flex-direction:column;justify-content:center}
+.brand{font-size:clamp(48px,8vw,84px);margin:0;letter-spacing:-.08em} .content{padding:40px;min-width:0} h2{margin-top:0} label{display:block;font-weight:650;margin:14px 0}
+input,button{width:100%;border-radius:10px;font:inherit;padding:11px 13px} input{display:block;margin-top:6px;border:1px solid #80968a} button{background:#216245;color:white;border:0;font-weight:700;cursor:pointer;margin:8px 0}button:disabled{opacity:.55;cursor:wait}
+small,#status{line-height:1.5} #status{color:#8b2e32} #identity{overflow-wrap:anywhere} [hidden]{display:none!important}
+@media(max-width:650px){main{grid-template-columns:1fr}header,.content{padding:28px}}
+</style>
+<main>
+<header><h1 class="brand">Kodama</h1><p id="mode" hidden>Demostración local</p></header>
+<section class="content">
+<form id="login">
+<h2>Iniciar sesión</h2>
+<label>Correo electrónico<input name="email" type="email" required autocomplete="username"></label>
+<label>Contraseña<input name="password" type="password" required autocomplete="current-password"></label>
+<button>Entrar</button>
+<small id="examples" hidden>Administradora: admin@kodama.test<br>Usuario: usuario@kodama.test<br>Contraseña de ambos: <strong>1234</strong></small>
+</form>
+<section id="panel" hidden>
+<h2 id="role"></h2>
+<p id="identity"></p>
+<form id="create" hidden>
+<h3>Crear cuenta de usuario</h3>
+<label>Correo del usuario<input name="email" type="email" required></label>
+<label>Contraseña inicial<input name="password" type="password" required minlength="12" maxlength="72" autocomplete="new-password"></label>
+<button>Crear usuario</button>
+</form>
+<form id="logout"><button>Cerrar sesión</button></form>
+</section>
+<p id="status" role="status"></p>
+</section>
+</main>
+<script src="./config.js"></script>
+<script>
+const config = window.KODAMA_CONFIG;
+const demo = config?.demo && ['file:', 'http:'].includes(location.protocol)
+  && (location.protocol === 'file:' || ['localhost','127.0.0.1'].includes(location.hostname));
+const login = document.querySelector('#login');
+const panel = document.querySelector('#panel');
+const create = document.querySelector('#create');
+const status = document.querySelector('#status');
+const examples = {
+  'admin@kodama.test': 'admin',
+  'usuario@kodama.test': 'user'
+};
+let client;
+function show(email, role) {
+  login.hidden = Boolean(role);
+  panel.hidden = !role;
+  create.hidden = role !== 'admin' || demo;
+  document.querySelector('#role').textContent = role === 'admin' ? 'Panel de administración' : 'Mi cuenta';
+  document.querySelector('#identity').textContent = email ?? '';
+}
+function submit(form, handler) {
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    const button = form.querySelector('button');
+    button.disabled = true;
+    status.textContent = '';
+    try { await handler(new FormData(form)); }
+    catch (error) { status.textContent = error.message; }
+    finally { button.disabled = false; }
+  });
+}
+async function showSession(session) {
+  if (!session) return show();
+  const { data, error } = await client.from('kodama_profiles').select('role').eq('id', session.user.id).single();
+  if (error || !['admin', 'user'].includes(data?.role)) {
+    await client.signOut();
+    throw new Error('Esta cuenta no tiene acceso a Kodama.');
+  }
+  show(session.user.email, data.role);
+}
+async function start() {
+  if (demo) {
+    document.querySelector('#mode').hidden = false;
+    document.querySelector('#examples').hidden = false;
+  } else {
+    if (!config?.url || !config?.publishableKey) throw new Error('Falta configurar la conexión con Supabase.');
+    const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2.110.0');
+    client = createClient(config.url, config.publishableKey);
+    const { data, error } = await client.auth.getSession();
+    if (error) throw new Error('No se pudo recuperar la sesión.');
+    await showSession(data.session);
+  }
+  submit(login, async fields => {
+    const email = String(fields.get('email')).trim().toLowerCase();
+    const password = String(fields.get('password'));
+    if (demo) {
+      if (!Object.hasOwn(examples, email) || password !== '1234') throw new Error('Correo o contraseña incorrectos.');
+      show(email, examples[email]);
+    } else {
+      const { data, error } = await client.auth.signInWithPassword({ email, password });
+      if (error) throw new Error('No se pudo iniciar sesión. Comprueba tus credenciales.');
+      await showSession(data.session);
+    }
+    login.reset();
+  });
+  submit(document.querySelector('#logout'), async () => {
+    if (!demo) {
+      const { error } = await client.auth.signOut({scope:'local'});
+      if (error) throw new Error('No se pudo cerrar la sesión. Inténtalo de nuevo.');
+    }
+    show();
+  });
+  submit(create, async fields => {
+    if (demo) return;
+    const { data, error } = await client.functions.invoke('kodama-create-user', {
+      body: { email: fields.get('email'), password: fields.get('password') }
+    });
+    if (error || !data?.id) throw new Error('No se pudo crear la cuenta. Revisa el correo y la contraseña.');
+    create.reset();
+    status.textContent = 'Cuenta de usuario creada.';
+  });
+}
+login.querySelector('button').disabled = true;
+start().then(() => { login.querySelector('button').disabled = false; })
+  .catch(error => { status.textContent = error.message; });
+</script>
+</html>
