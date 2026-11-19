@@ -23,3 +23,7 @@ where id = '00000000-0000-0000-0000-000000000000';
 5. Entre con la cuenta de administración y cree las cuentas de usuario desde el panel. La función crea los perfiles automáticamente y exige contraseñas de al menos 12 caracteres.
 
 Esta entrega es una base web independiente del archivo de MIT App Inventor.
+
+## Referencias de interfaz
+USWDS y Headless UI sirvieron como referencia para etiquetas visibles, foco de teclado y estados de los controles. La interfaz de Kodama usa HTML y CSS propios.
+

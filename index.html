@@ -4,13 +4,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kodama · Acceso</title>
 <style>
-*{box-sizing:border-box} body{margin:0;background:#e8efe7;color:#193b2c;font:16px system-ui,sans-serif;min-height:100dvh;display:grid;place-items:center;padding:24px}
-main{width:min(100%,920px);display:grid;grid-template-columns:1fr 1fr;background:#fff;border-radius:26px;overflow:hidden;box-shadow:0 24px 80px #17352524}
-header{background:#143b2b;color:#eff7e9;padding:55px 42px;display:flex;flex-direction:column;justify-content:center}
-.brand{font-size:clamp(48px,8vw,84px);margin:0;letter-spacing:-.08em} .content{padding:40px;min-width:0} h2{margin-top:0} label{display:block;font-weight:650;margin:14px 0}
-input,button{width:100%;border-radius:10px;font:inherit;padding:11px 13px} input{display:block;margin-top:6px;border:1px solid #80968a} button{background:#216245;color:white;border:0;font-weight:700;cursor:pointer;margin:8px 0}button:disabled{opacity:.55;cursor:wait}
-small,#status{line-height:1.5} #status{color:#8b2e32} #identity{overflow-wrap:anywhere} [hidden]{display:none!important}
-@media(max-width:650px){main{grid-template-columns:1fr}header,.content{padding:28px}}
+:root{color-scheme:light;--ink:#172b25;--muted:#4a6258;--pine:#123d32;--paper:#f5f7f3;--line:#aabbb2;--accent:#25674f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 system-ui,sans-serif;min-height:100dvh;display:grid;place-items:center;padding:clamp(16px,4vw,64px)}
+main{isolation:isolate;width:min(100%,1060px);min-height:575px;display:grid;grid-template-columns:1.05fr 1fr;background:#fff;border:1px solid #dbe4dc;border-radius:28px;overflow:hidden;box-shadow:0 24px 80px #19392d17}
+header{position:relative;overflow:hidden;isolation:isolate;background:radial-gradient(ellipse at 90% 86%,#397b5e 0%,transparent 58%),linear-gradient(150deg,#102d26,#153e33 62%,#1c5747);color:#f5f8ef;padding:clamp(32px,6vw,72px);display:flex;flex-direction:column;justify-content:center}
+header::before,header::after{content:"";position:absolute;z-index:-1;right:-210px;bottom:-345px;width:660px;aspect-ratio:1;border-radius:45% 55% 62% 38%;transform:rotate(-26deg);border:1px solid #cae4ba4a;box-shadow:0 0 0 22px #d1e5c319,0 0 0 45px #d1e5c319,0 0 0 70px #d1e5c319,0 0 0 98px #d1e5c319,0 0 0 130px #d1e5c319}
+header::after{right:-390px;bottom:25px;transform:rotate(16deg);opacity:.55}
+.brand{font-size:clamp(54px,8vw,102px);line-height:1;letter-spacing:-.08em;margin:0;font-weight:730}
+#mode{align-self:flex-start;margin:24px 0 0;padding:5px 12px;border:1px solid #d8edcf70;border-radius:999px;font-size:.82rem}
+.content{align-self:center;padding:clamp(25px,5.7vw,66px);min-width:0}
+h2{margin:0 0 20px;font-size:clamp(25px,3.5vw,38px);letter-spacing:-.045em;line-height:1.15}
+h3{margin:24px 0 6px}label{display:block;font-weight:650;margin:16px 0;font-size:.94rem}
+input,button{width:100%;border-radius:11px;font:inherit;padding:12px 14px;min-height:48px}
+input{display:block;margin-top:6px;border:1px solid var(--line);background:#fcfdfa;color:var(--ink)}
+button{background:var(--accent);color:#fff;border:1px solid transparent;font-weight:700;cursor:pointer;margin:8px 0}
+button:hover:enabled{background:var(--pine)} button:disabled{opacity:.55;cursor:wait}
+:focus-visible{outline:3px solid #a27321;outline-offset:3px}
+#examples{display:block;background:#edf4eb;color:var(--ink);border-radius:12px;padding:12px 14px;margin-top:15px}
+#status{color:#8b2e32;margin:12px 0 0}#status:empty{display:none}
+#identity{overflow-wrap:anywhere;color:var(--muted)} [hidden]{display:none!important}
+@media(max-width:680px){main{grid-template-columns:1fr;min-height:0}header{min-height:190px}.content{padding:30px 24px}}
 </style>
 <main>
 <header><h1 class="brand">Kodama</h1><p id="mode" hidden>Demostración local</p></header>
@@ -83,7 +97,7 @@ async function start() {
     document.querySelector('#examples').hidden = false;
   } else {
     if (!config?.url || !config?.publishableKey) throw new Error('Falta configurar la conexión con Supabase.');
-    const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2.110.0');
+    const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2.49.4');
     client = createClient(config.url, config.publishableKey);
     const { data, error } = await client.auth.getSession();
     if (error) throw new Error('No se pudo recuperar la sesión.');
@@ -124,3 +138,4 @@ start().then(() => { login.querySelector('button').disabled = false; })
   .catch(error => { status.textContent = error.message; });
 </script>
 </html>
+
