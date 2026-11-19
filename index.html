@@ -166,6 +166,11 @@ dd { margin: 0 0 8px; }
   .video-grid { grid-template-columns: minmax(0, 1fr); }
   .mascot-stage { min-height: 125px; }
 }
+#notices{margin:18px 0;padding:14px;border:1px solid var(--line);border-radius:15px;background:#f7edef}
+#notices h3{margin:0}
+#notice-list{list-style:none;margin:0;padding:0;max-height:280px;overflow:auto}
+#notice-list li{display:grid;gap:3px;padding:8px 0;border-top:1px solid var(--line);overflow-wrap:anywhere}
+#notice-list time,#notice-status{color:var(--muted);font-size:.87rem}
 </style>
 <main>
 <header><div class="brand-lockup"><h1 class="brand">Kodama<span>.</span></h1><p id="mode" hidden>Demostración local</p></div><div class="artwork"><img class="logo" src="KODAMALOGO.jpeg" alt="Mascota de Kodama con una manzana"></div></header>
@@ -190,6 +195,11 @@ dd { margin: 0 0 8px; }
 <section id="panel" hidden>
 <h2 id="role"></h2>
 <p id="identity"></p>
+<section id="notices" hidden aria-labelledby="notices-heading">
+  <h3 id="notices-heading">Avisos de acceso</h3>
+  <p id="notice-status" role="status"></p>
+  <ul id="notice-list"></ul>
+</section>
 <nav id="navigation" aria-label="Secciones de Kodama">
   <button type="button" data-view="home">Inicio</button>
   <button type="button" data-view="chat">Chat</button>
@@ -358,7 +368,66 @@ document.querySelector('#dictate').addEventListener('click', () => {
   recognition.onerror = () => { chatStatus.textContent = 'No se pudo iniciar el dictado.'; };
   recognition.start();
 });
+const notices = document.querySelector('#notices');
+const noticeList = document.querySelector('#notice-list');
+const noticeStatus = document.querySelector('#notice-status');
+const noticeDate = new Intl.DateTimeFormat('es-EC', { dateStyle: 'medium', timeStyle: 'short' });
+let noticeTimer;
+let noticeRequest;
+function renderNotices(rows) {
+  noticeList.replaceChildren();
+  for (const row of rows) {
+    const item = document.createElement('li');
+    const email = document.createElement('strong');
+    email.textContent = row.email;
+    const time = document.createElement('time');
+    time.dateTime = row.signed_in_at;
+    time.textContent = noticeDate.format(new Date(row.signed_in_at));
+    item.append(email, time);
+    noticeList.append(item);
+  }
+}
+function showNotices(role) {
+  clearInterval(noticeTimer);
+  noticeRequest?.abort();
+  noticeRequest = undefined;
+  noticeList.replaceChildren();
+  noticeStatus.textContent = '';
+  notices.hidden = role !== 'admin';
+  if (notices.hidden) return;
+  if (demo) {
+    noticeStatus.textContent = 'Ejemplo de un aviso. Los accesos de prueba no se guardan.';
+    renderNotices([{ email: 'usuario@kodama.test', signed_in_at: new Date().toISOString() }]);
+    return;
+  }
+  noticeStatus.textContent = 'Cargando avisos…';
+  const controller = new AbortController();
+  noticeRequest = controller;
+  let latest;
+  async function refresh() {
+    const { data, error } = await client.from('kodama_access_notices')
+      .select('email,signed_in_at').order('signed_in_at', { ascending: false })
+      .limit(50).abortSignal(controller.signal);
+    if (controller.signal.aborted) return;
+    if (error) {
+      noticeStatus.textContent = 'No se pudieron actualizar los avisos.';
+      return;
+    }
+    const newest = data[0]?.signed_in_at;
+    if (!data.length) noticeStatus.textContent = 'Todavía no hay avisos de acceso.';
+    else if (latest && newest > latest) noticeStatus.textContent = 'Nuevo inicio de sesión.';
+    else if (noticeStatus.textContent !== 'Nuevo inicio de sesión.') noticeStatus.textContent = 'Últimos accesos de usuarios.';
+    latest = newest;
+    renderNotices(data);
+  }
+  const scheduleRefresh = async () => {
+    await refresh();
+    if (!controller.signal.aborted) noticeTimer = setTimeout(scheduleRefresh, 15000);
+  };
+  void scheduleRefresh();
+}
 function show(email, role) {
+  showNotices(role);
   resetVideos();
   document.querySelector('.video-library').open = false;
   showAccess(role ? null : 'welcome');
@@ -391,6 +460,10 @@ async function showSession(session) {
     throw new Error('Esta cuenta no tiene acceso a Kodama.');
   }
   show(session.user.email, data.role);
+  if (data.role === 'user') {
+    const { error: noticeError } = await client.rpc('kodama_record_access');
+    if (noticeError) status.textContent = 'La sesión está activa. No se pudo registrar este acceso.';
+  }
 }
 async function start() {
   if (demo) {
@@ -440,6 +513,7 @@ start().then(() => { login.querySelector('button').disabled = false; })
   .catch(error => { status.textContent = error.message; });
 </script>
 </html>
+
 
 
 

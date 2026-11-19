@@ -36,3 +36,7 @@ La versión web incorpora la portada, Inicio, Chat, Perfil y Acerca de con los t
 
 La biblioteca Videos incluye dos recursos en español de YouTube. Sus reproductores se cargan al pulsar Reproducir y cada tarjeta enlaza al video original. El diseño de tarjetas y controles toma como referencia [shadcn/ui](https://github.com/shadcn-ui/ui). El fantasma original se anima con CSS y respeta la preferencia de movimiento reducido.
 
+
+## Avisos de acceso
+
+Aplique también la migración 202611190002 después de crear los perfiles de Kodama. Cada sesión de usuario registrada desde Kodama genera un aviso único. En el panel de administración se ven los últimos 50 avisos y la lista se actualiza cada 15 segundos mientras está abierta. La demo pública muestra un aviso de ejemplo. El buzón no envía correos ni notificaciones push.
