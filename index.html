@@ -25,20 +25,90 @@ button:hover:enabled{background:var(--pine)} button:disabled{opacity:.55;cursor:
 #status{color:#8b2e32;margin:12px 0 0}#status:empty{display:none}
 #identity{overflow-wrap:anywhere;color:var(--muted)} [hidden]{display:none!important}
 @media(max-width:680px){main{grid-template-columns:1fr;min-height:0}header{min-height:190px}.content{padding:30px 24px}}
+.logo{width:min(56%,173px);aspect-ratio:1;object-fit:cover;border-radius:28px;margin-bottom:22px}
+.brand{font-size:clamp(43px,6.6vw,82px)}
+.secondary{background:#eef4ef;color:var(--pine)}
+.secondary:hover:enabled{background:#dfece4}
+#navigation,.chat-tools{display:flex;gap:6px;flex-wrap:wrap}
+#navigation button,.chat-tools button{width:auto;flex:1;min-height:44px;padding:7px 9px}
+#navigation button[aria-current="page"]{background:#123d32;text-decoration:underline;text-underline-offset:4px}
+.mascot{display:block;width:86px;margin:14px auto}
+details{border-bottom:1px solid #dbe4dc;padding:8px 0}
+summary{cursor:pointer;font-weight:650}
+dd{margin:0 0 8px;color:var(--muted)}
+dt{font-weight:650}
+.chat-tools img,.info-icon{width:24px;height:24px;object-fit:contain;vertical-align:middle}
+#messages{max-height:240px;overflow:auto}
+#messages p{background:#edf4eb;border-radius:12px;padding:9px 13px;overflow-wrap:anywhere;white-space:pre-wrap}
 </style>
 <main>
-<header><h1 class="brand">Kodama</h1><p id="mode" hidden>Demostración local</p></header>
+<header><img class="logo" src="KODAMALOGO.jpeg" alt=""><h1 class="brand">KODAMA</h1><p id="mode" hidden>Demostración local</p></header>
 <section class="content">
-<form id="login">
+<section id="welcome">
+  <h2>Tu espacio seguro</h2>
+  <button type="button" data-access="login">Iniciar sesión</button>
+  <button class="secondary" type="button" data-access="register">Registrarse</button>
+</section>
+<section id="register" hidden>
+  <h2>Registrarse</h2>
+  <p>Solicita una cuenta a la administradora de Kodama. Ella te entregará tu contraseña inicial.</p>
+  <button type="button" data-access="login">Volver a iniciar sesión</button>
+</section>
+<form id="login" hidden>
 <h2>Iniciar sesión</h2>
-<label>Correo electrónico<input name="email" type="email" required autocomplete="username"></label>
+<label>Usuario (correo electrónico)<input name="email" type="email" required autocomplete="username"></label>
 <label>Contraseña<input name="password" type="password" required autocomplete="current-password"></label>
-<button>Entrar</button>
+<button>Entrar</button><button class="secondary" type="button" data-access="welcome">Volver</button>
 <small id="examples" hidden>Administradora: admin@kodama.test<br>Usuario: usuario@kodama.test<br>Contraseña de ambos: <strong>1234</strong></small>
 </form>
 <section id="panel" hidden>
 <h2 id="role"></h2>
 <p id="identity"></p>
+<nav id="navigation" aria-label="Secciones de Kodama">
+  <button type="button" data-view="home">Inicio</button>
+  <button type="button" data-view="chat">Chat</button>
+  <button type="button" data-view="progress">Progreso</button>
+  <button type="button" data-view="profile">Perfil</button>
+</nav>
+<section id="home" data-screen>
+  <img class="mascot" src="Capturadepantalla2026-02-18045839.png" alt="Mascota de Kodama">
+  <div class="resources">
+    <details><summary>Videos</summary><p>Aún no hay videos disponibles.</p></details>
+    <details><summary>Comunidad</summary><p>Aún no hay publicaciones.</p></details>
+    <details><summary>Definiciones</summary><p>Aún no hay definiciones publicadas.</p></details>
+  </div>
+</section>
+<section id="chat" data-screen hidden>
+  <h3>Psicólogo</h3>
+  <p>Vista de demostración del chat. Los mensajes se quedan en esta pantalla.</p>
+  <div id="messages" role="log" aria-label="Conversación"><p>Hola</p></div>
+  <form id="message-form">
+    <label>Mensaje<input id="message" placeholder="Mensaje..." maxlength="1000" required></label>
+    <div class="chat-tools">
+      <button type="button" id="dictate" aria-label="Dictar mensaje"><img src="microfono.png" alt=""></button>
+      <button type="submit" aria-label="Agregar mensaje a la vista"><img src="enviar.png" alt=""></button>
+    </div>
+  </form>
+  <p id="chat-status" role="status"></p>
+</section>
+<section id="progress" data-screen hidden><h3>Progreso</h3><p>Aún no hay registros de progreso.</p></section>
+<section id="profile" data-screen hidden>
+  <dl><dt>Usuario</dt><dd id="profile-email"></dd><dt>Descripción</dt><dd>Sin descripción</dd>
+    <dt>Etiquetas</dt><dd>Sin etiquetas</dd><dt>Reconocimiento</dt><dd>Sin reconocimientos</dd></dl>
+  <details><summary>Retos y Logros</summary><p>Aún no hay retos ni logros.</p></details>
+  <details><summary>Evaluaciones</summary><p>Aún no hay evaluaciones.</p></details>
+  <button class="secondary" type="button" data-view="terms"><img class="info-icon" src="i.jpg" alt=""> Acerca de</button>
+</section>
+<section id="terms" data-screen hidden>
+  <h3>Nuestro Compromiso con la Seguridad y Calidad</h3>
+  <p>Texto del proyecto original de App Inventor.</p>
+  <article><h3>Seguridad de tus datos:</h3><p>Protegemos tu privacidad cumpliendo con la Ley de Protecci&#243;n de Datos Personales y aplicando cifrado avanzado para garantizar la confidencialidad de tu informaci&#243;n.</p></article>
+<article><h3>Especialistas certificados:</h3><p>Todos los profesionales de Kodama est&#225;n avalados por el Ministerio de Salud P&#250;blica y cumplen con altos est&#225;ndares &#233;ticos.</p></article>
+<article><h3>Accesibilidad para todos: </h3><p>Kodama es inclusivo y accesible, dise&#241;ado para personas con discapacidades y disponible en espa&#241;ol, con opciones para lenguas locales.</p></article>
+<article><h3>Transparencia: </h3><p>Ofrecemos t&#233;rminos claros y emitimos facturaci&#243;n electr&#243;nica conforme a las regulaciones del SRI (15% IVA).</p></article>
+<article><h3>Innovaci&#243;n:</h3><p>Incorporamos inteligencia artificial para personalizar tus recomendaciones y mejorar tu experiencia.</p></article>
+<article><h3>Responsabilidad social:</h3><p>Apoyamos comunidades vulnerables mediante programas de subsidio y cuidamos el medio ambiente con operaciones sostenibles.</p></article>
+</section>
 <form id="create" hidden>
 <h3>Crear cuenta de usuario</h3>
 <label>Correo del usuario<input name="email" type="email" required></label>
@@ -64,11 +134,63 @@ const examples = {
   'usuario@kodama.test': 'user'
 };
 let client;
+const access = ['welcome', 'login', 'register'];
+function showAccess(page) {
+  for (const id of access) document.getElementById(id).hidden = id !== page;
+}
+document.querySelectorAll('[data-access]').forEach(button => {
+  button.addEventListener('click', () => {
+    status.textContent = '';
+    login.reset();
+    showAccess(button.dataset.access);
+    document.getElementById(button.dataset.access).querySelector('button, input')?.focus();
+  });
+});
+function showView(view) {
+  for (const screen of document.querySelectorAll('[data-screen]')) screen.hidden = screen.id !== view;
+  for (const button of document.querySelectorAll('#navigation [data-view]')) {
+    button.setAttribute('aria-current', button.dataset.view === view ? 'page' : 'false');
+  }
+}
+document.querySelectorAll('[data-view]').forEach(button => {
+  button.addEventListener('click', () => showView(button.dataset.view));
+});
+const message = document.querySelector('#message');
+const messages = document.querySelector('#messages');
+const greeting = messages.firstElementChild;
+const chatStatus = document.querySelector('#chat-status');
+document.querySelector('#message-form').addEventListener('submit', event => {
+  event.preventDefault();
+  const text = message.value.trim();
+  if (!text) return;
+  const entry = document.createElement('p');
+  entry.textContent = text;
+  messages.append(entry);
+  entry.scrollIntoView({ block: 'nearest' });
+  message.value = '';
+});
+document.querySelector('#dictate').addEventListener('click', () => {
+  const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!Recognition) {
+    chatStatus.textContent = 'El dictado no está disponible en este navegador.';
+    return;
+  }
+  const recognition = new Recognition();
+  recognition.lang = 'es-EC';
+  recognition.onresult = event => { if (!panel.hidden) message.value = event.results[0][0].transcript.slice(0, 1000); };
+  recognition.onerror = () => { chatStatus.textContent = 'No se pudo iniciar el dictado.'; };
+  recognition.start();
+});
 function show(email, role) {
-  login.hidden = Boolean(role);
+  showAccess(role ? null : 'welcome');
+  showView('home');
+  messages.replaceChildren(greeting);
+  message.value = '';
+  chatStatus.textContent = '';
+  document.querySelector('#profile-email').textContent = email ?? '';
   panel.hidden = !role;
   create.hidden = role !== 'admin' || demo;
-  document.querySelector('#role').textContent = role === 'admin' ? 'Panel de administración' : 'Mi cuenta';
+  document.querySelector('#role').textContent = role === 'admin' ? 'Panel de administración' : 'Tu espacio seguro';
   document.querySelector('#identity').textContent = email ?? '';
 }
 function submit(form, handler) {
@@ -138,4 +260,5 @@ start().then(() => { login.querySelector('button').disabled = false; })
   .catch(error => { status.textContent = error.message; });
 </script>
 </html>
+
 

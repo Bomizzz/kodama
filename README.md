@@ -19,11 +19,16 @@ where id = '00000000-0000-0000-0000-000000000000';
 ```
 
 3. Despliegue la función kodama-create-user. Configure KODAMA_ORIGIN con el origen HTTPS exacto del frontend, sin barra final. Si se desactiva la verificación JWT del gateway para esta función, la función valida igualmente el token con Supabase Auth y comprueba el rol en la base de datos.
-4. Cambie demo a false en config.js y configure la URL y la clave publicable del proyecto. Publique index.html y config.js en el origen anterior. Mantenga las claves privilegiadas en Supabase.
+4. Cambie demo a false en config.js y configure la URL y la clave publicable del proyecto. Publique index.html, config.js y las imágenes incluidas en el origen anterior. Mantenga las claves privilegiadas en Supabase.
 5. Entre con la cuenta de administración y cree las cuentas de usuario desde el panel. La función crea los perfiles automáticamente y exige contraseñas de al menos 12 caracteres.
 
-Esta entrega es una base web independiente del archivo de MIT App Inventor.
+Esta versión adapta a la web las pantallas y los recursos del proyecto original KODAMA de MIT App Inventor.
 
 ## Referencias de interfaz
 USWDS y Headless UI sirvieron como referencia para etiquetas visibles, foco de teclado y estados de los controles. La interfaz de Kodama usa HTML y CSS propios.
+
+
+## Pantallas recuperadas de App Inventor
+
+La versión web incorpora la portada, Inicio, Chat, Perfil y Acerca de con los textos y las imágenes del proyecto KODAMA. El registro dirige a la administradora, según el flujo de cuentas solicitado. Progreso era una pantalla vacía y conserva un estado sin registros. Pago también estaba vacío y no tenía un enlace operativo. Chat conserva el saludo y permite probar escritura y dictado compatible. La vista no conecta con profesionales ni transmite mensajes. Videos, Comunidad, Definiciones, Retos y Logros y Evaluaciones conservan sus nombres como secciones sin contenido publicado.
 
