@@ -1,6 +1,6 @@
 ﻿# Kodama
 
-Abra index.html para probar el acceso local. Ambas cuentas de demostración usan 1234. En sitios publicados la demostración está desactivada.
+Abra index.html para probar el acceso local. Ambas cuentas de demostración usan 1234. La demostración también está disponible en la vista previa pública de GitHub Pages. Usa cuentas ficticias y no guarda datos en Supabase.
 
 | Rol | Correo |
 | --- | --- |
@@ -30,5 +30,9 @@ USWDS y Headless UI sirvieron como referencia para etiquetas visibles, foco de t
 
 ## Pantallas recuperadas de App Inventor
 
-La versión web incorpora la portada, Inicio, Chat, Perfil y Acerca de con los textos y las imágenes del proyecto KODAMA. El registro dirige a la administradora, según el flujo de cuentas solicitado. Progreso era una pantalla vacía y conserva un estado sin registros. Pago también estaba vacío y no tenía un enlace operativo. Chat conserva el saludo y permite probar escritura y dictado compatible. La vista no conecta con profesionales ni transmite mensajes. Videos, Comunidad, Definiciones, Retos y Logros y Evaluaciones conservan sus nombres como secciones sin contenido publicado.
+La versión web incorpora la portada, Inicio, Chat, Perfil y Acerca de con los textos y las imágenes del proyecto KODAMA. El registro dirige a la administradora, según el flujo de cuentas solicitado. Progreso era una pantalla vacía y conserva un estado sin registros. Pago también estaba vacío y no tenía un enlace operativo. Chat conserva el saludo y permite probar escritura y dictado compatible. La vista no conecta con profesionales ni transmite mensajes. Comunidad, Definiciones, Retos y Logros y Evaluaciones conservan sus nombres como secciones sin contenido publicado.
+
+
+
+La biblioteca Videos incluye dos recursos en español de YouTube. Sus reproductores se cargan al pulsar Reproducir y cada tarjeta enlaza al video original. El diseño de tarjetas y controles toma como referencia [shadcn/ui](https://github.com/shadcn-ui/ui). El fantasma original se anima con CSS y respeta la preferencia de movimiento reducido.
 
