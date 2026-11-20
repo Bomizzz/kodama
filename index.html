@@ -457,7 +457,7 @@ async function showSession(session) {
   if (!session) return show();
   const { data, error } = await client.from('kodama_profiles').select('role').eq('id', session.user.id).single();
   if (error || !['admin', 'user'].includes(data?.role)) {
-    await client.signOut();
+    await client.auth.signOut({ scope: 'local' });
     throw new Error('Esta cuenta no tiene acceso a Kodama.');
   }
   show(session.user.email, data.role);
@@ -540,6 +540,7 @@ start().then(() => { login.querySelector('button').disabled = false; })
   .catch(error => { status.textContent = error.message; });
 </script>
 <script src="./kodama-experience.js?v=mobile-3"></script></html>
+
 
 
 
