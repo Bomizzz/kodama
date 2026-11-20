@@ -126,17 +126,18 @@ main, header, #chat { background: transparent; }
 
 /* Signed-in screens use the same app shell and navigation. */
 #panel > #role, #panel > #identity { display:none; }
-#panel[data-screen="admin"] > #admin-open { display:none; }
+#panel[data-active-view="admin"] > #admin-open { display:none; }
 #admin-open { display:block; width:auto; margin:0 0 12px auto; }
 #panel [data-screen] { min-width:0; }
 #panel [data-screen] > h2 { margin:0 0 16px; }
 #panel [data-screen] > h2:focus { outline:none; }
-#panel[data-screen="home"] .mascot-stage { min-height:clamp(190px,36vh,350px); }
-#panel[data-screen="chat"] #messages { min-height:clamp(95px,23vh,210px); }
+#panel[data-active-view="home"] .mascot-stage { min-height:clamp(190px,36vh,350px); }
+#panel[data-active-view="chat"] #messages { min-height:clamp(95px,23vh,210px); }
 main:has(#panel:not([hidden])) > header { align-self:stretch; }
 @media (max-width:600px) {
   main:has(#panel:not([hidden])) > header { display:none; }
   main:has(#panel:not([hidden])) .content { background:#fff9; min-height:calc(100dvh - 58px); border-radius:20px 20px 0 0; }
   #panel [data-screen] { min-height:calc(100dvh - 180px); }
-  #panel[data-screen="chat"] [data-screen]:not([hidden]) { min-height:0; }
+  #panel[data-active-view="chat"] [data-screen]:not([hidden]) { min-height:0; }
 }
+

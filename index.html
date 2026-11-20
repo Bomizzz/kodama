@@ -283,7 +283,7 @@ dd { margin: 0 0 8px; }
 <p id="status" role="status"></p>
 </section>
 </main>
-<link rel="stylesheet" href="./kodama-experience.css?v=screens-1"><script src="./config.js?v=supabase-1"></script>
+<link rel="stylesheet" href="./kodama-experience.css?v=screens-2"><script src="./config.js?v=supabase-1"></script>
 <script>
 const config = window.KODAMA_CONFIG;
 const publicPreview = location.origin === 'https://bomizzz.github.io' && location.pathname.startsWith('/kodama/');
@@ -338,7 +338,7 @@ document.querySelector('.video-library').addEventListener('toggle', event => {
 });
 function showView(view) {
   if (view === 'admin' && document.querySelector('#admin-open').hidden) return;
-  panel.dataset.screen = view;
+  panel.dataset.activeView = view;
   if (view !== 'home') resetVideos();
   for (const screen of document.querySelectorAll('[data-screen]')) screen.hidden = screen.id !== view;
   for (const button of document.querySelectorAll('#navigation [data-view]')) {
@@ -557,7 +557,8 @@ login.querySelector('button').disabled = true;
 start().then(() => { login.querySelector('button').disabled = false; })
   .catch(error => { status.textContent = error.message; });
 </script>
-<script src="./kodama-experience.js?v=screens-1"></script></html>
+<script src="./kodama-experience.js?v=screens-2"></script></html>
+
 
 
 
