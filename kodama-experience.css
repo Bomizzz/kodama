@@ -1,4 +1,4 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Chewy&family=Gaegu:wght@700&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Chewy&family=Gaegu:wght@700&family=Nunito:wght@600;700;800;900&display=swap');
 :root{--ink:#111;--paper:#fff;--wash:#f4f1ea;--line:#e2dce6;--plum:#111;--deep-plum:#28232a;--serif:Gaegu,system-ui,sans-serif}
 body{background:#f4f1ea;padding-top:84px}
 main{border-radius:27px}
@@ -106,3 +106,20 @@ h2 { font:700 clamp(27px,7vw,43px)/1.12 system-ui,sans-serif; letter-spacing:-.0
 }
 @media(prefers-reduced-motion:reduce) { header .brand span { animation:none; } }
 
+
+body {
+  background: radial-gradient(ellipse at 0% 0%, #cfe0f3 0%, transparent 65%),
+    radial-gradient(ellipse at 100% 12%, #f2a7b5 0%, transparent 72%),
+    linear-gradient(155deg, #eee9ff, #f3c9a8);
+  background-attachment: fixed;
+}
+main, header, #chat { background: transparent; }
+.content { background: #fffcfa58; border-radius: 24px; }
+#welcome h2, #role {
+  font: 900 clamp(30px, 8vw, 48px)/1.12 Nunito, "Arial Rounded MT Bold", system-ui, sans-serif;
+  letter-spacing: -.025em;
+}
+#examples { background: #fff8; }
+@media (max-width:600px) {
+  .content { border-radius: 20px 20px 0 0; }
+}

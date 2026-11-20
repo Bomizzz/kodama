@@ -182,7 +182,7 @@ dd { margin: 0 0 8px; }
 <header><div class="brand-lockup"><h1 class="brand" aria-label="Kodama"><span aria-hidden="true">K</span><span aria-hidden="true">O</span><span aria-hidden="true">D</span><span aria-hidden="true">A</span><span aria-hidden="true">M</span><span aria-hidden="true">A</span></h1><p id="mode" hidden>Demostración local</p></div><div class="artwork"><img class="logo" src="KODAMALOGO.jpeg" alt="Mascota de Kodama con una manzana"></div></header>
 <section class="content">
 <section id="welcome">
-  <h2 data-es="TU ESPACIO SEGURO" data-en="YOUR SAFE SPACE">TU ESPACIO SEGURO</h2>
+  <h2 data-es="Tu espacio seguro" data-en="Your safe space">Tu espacio seguro</h2>
   <button type="button" data-access="login"><span data-es="Iniciar sesión" data-en="Sign in">Iniciar sesión</span></button>
   <button class="secondary" type="button" data-access="register"><span data-es="Registrarse" data-en="Register">Registrarse</span></button>
 </section>
@@ -206,7 +206,7 @@ dd { margin: 0 0 8px; }
 <label><span data-es="Usuario (correo electrónico)" data-en="User (email)">Usuario (correo electrónico)</span><input name="email" type="email" required autocomplete="username"></label>
 <label><span data-es="Contraseña" data-en="Password">Contraseña</span><input name="password" type="password" required autocomplete="current-password"></label>
 <button><span data-es="Entrar" data-en="Sign in">Entrar</span></button><button class="secondary" type="button" data-access="welcome"><span data-es="Volver" data-en="Back">Volver</span></button>
-<small id="examples" hidden>Administradora: admin@kodama.test<br>Usuario: usuario@kodama.test<br>Contraseña de ambos: <strong>1234</strong></small>
+<small id="examples" hidden><span data-es="Cuentas de prueba" data-en="Demo accounts">Cuentas de prueba</span><br><strong>usuario</strong> · <strong>administrador</strong><br><span data-es="Contraseña" data-en="Password">Contraseña</span>: <strong>1234</strong></small>
 </form>
 <section id="panel" hidden>
 <h2 id="role"></h2>
@@ -276,7 +276,7 @@ dd { margin: 0 0 8px; }
 <p id="status" role="status"></p>
 </section>
 </main>
-<link rel="stylesheet" href="./kodama-experience.css?v=mobile-2"><script src="./config.js"></script>
+<link rel="stylesheet" href="./kodama-experience.css?v=mobile-3"><script src="./config.js"></script>
 <script>
 const config = window.KODAMA_CONFIG;
 const publicPreview = location.origin === 'https://bomizzz.github.io' && location.pathname.startsWith('/kodama/');
@@ -469,6 +469,14 @@ async function start() {
     document.querySelector('#mode').textContent = publicPreview ? 'Vista previa · cuentas de prueba' : 'Demostración local';
     document.querySelector('#mode').hidden = false;
     document.querySelector('#examples').hidden = false;
+    const identifier = login.elements.email;
+    identifier.type = 'text';
+    identifier.inputMode = 'text';
+    identifier.autocapitalize = 'none';
+    const label = login.querySelector('label [data-es]');
+    label.dataset.es = 'Usuario o correo';
+    label.dataset.en = 'Username or email';
+    label.textContent = label.dataset[document.documentElement.lang] || label.dataset.es;
   } else {
     if (!config?.url || !config?.publishableKey) throw new Error('Falta configurar la conexión con Supabase.');
     const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2.49.4');
@@ -481,8 +489,17 @@ async function start() {
     const email = String(fields.get('email')).trim().toLowerCase();
     const password = String(fields.get('password'));
     if (demo) {
-      if (!Object.hasOwn(examples, email) || password !== '1234') throw new Error('Correo o contraseña incorrectos.');
-      show(email, examples[email]);
+      const aliases = {
+        usuario: 'usuario@kodama.test',
+        administrador: 'admin@kodama.test',
+        administradora: 'admin@kodama.test',
+        admin: 'admin@kodama.test',
+      };
+      const account = Object.hasOwn(aliases, email) ? aliases[email] : email;
+      if (!Object.hasOwn(examples, account) || password !== '1234') {
+        throw new Error(document.documentElement.lang === 'en' ? 'Incorrect username or password.' : 'Usuario o contraseña incorrectos.');
+      }
+      show(account, examples[account]);
     } else {
       const { data, error } = await client.auth.signInWithPassword({ email, password });
       if (error) throw new Error('No se pudo iniciar sesión. Comprueba tus credenciales.');
@@ -511,7 +528,8 @@ login.querySelector('button').disabled = true;
 start().then(() => { login.querySelector('button').disabled = false; })
   .catch(error => { status.textContent = error.message; });
 </script>
-<script src="./kodama-experience.js?v=mobile-2"></script></html>
+<script src="./kodama-experience.js?v=mobile-3"></script></html>
+
 
 
 
