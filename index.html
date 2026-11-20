@@ -201,6 +201,7 @@ dd { margin: 0 0 8px; }
 <button data-es="Probar registro" data-en="Try registration">Probar registro</button><p id="registration-status" role="status"></p></form>
   <button type="button" data-access="login"><span data-es="Volver a iniciar sesión" data-en="Back to sign in">Volver a iniciar sesión</span></button>
 </section>
+<p id="access-mode"><a href="?acceso=real" id="real-access" data-es="Acceso con cuenta real" data-en="Sign in with a real account">Acceso con cuenta real</a></p>
 <form id="login" hidden>
 <h2><span data-es="Iniciar sesión" data-en="Sign in">Iniciar sesión</span></h2>
 <label><span data-es="Usuario (correo electrónico)" data-en="User (email)">Usuario (correo electrónico)</span><input name="email" type="email" required autocomplete="username"></label>
@@ -276,13 +277,14 @@ dd { margin: 0 0 8px; }
 <p id="status" role="status"></p>
 </section>
 </main>
-<link rel="stylesheet" href="./kodama-experience.css?v=mobile-3"><script src="./config.js"></script>
+<link rel="stylesheet" href="./kodama-experience.css?v=mobile-3"><script src="./config.js?v=supabase-1"></script>
 <script>
 const config = window.KODAMA_CONFIG;
 const publicPreview = location.origin === 'https://bomizzz.github.io' && location.pathname.startsWith('/kodama/');
 const localPreview = ['file:', 'http:'].includes(location.protocol)
   && (location.protocol === 'file:' || ['localhost','127.0.0.1'].includes(location.hostname));
-const demo = config?.demo && (localPreview || publicPreview);
+const realAccess = new URLSearchParams(location.search).get('acceso') === 'real';
+const demo = config?.demo && (localPreview || publicPreview) && !realAccess;
 const login = document.querySelector('#login');
 const panel = document.querySelector('#panel');
 const create = document.querySelector('#create');
@@ -427,6 +429,7 @@ function show(email, role) {
   showNotices(role);
   resetVideos();
   document.querySelector('.video-library').open = false;
+  document.querySelector('#access-mode').hidden = Boolean(role);
   showAccess(role ? null : 'welcome');
   showView('home');
   greeting.hidden = false;
@@ -465,6 +468,14 @@ async function showSession(session) {
 }
 window.kodamaOpenView = showView;
 async function start() {
+  if (realAccess) {
+    const realLink = document.querySelector('#real-access');
+    realLink.href = location.pathname;
+    realLink.dataset.es = 'Volver a las cuentas de prueba';
+    realLink.dataset.en = 'Back to demo accounts';
+    realLink.textContent = realLink.dataset[document.documentElement.lang] || realLink.dataset.es;
+    document.querySelector('#mode').textContent = '';
+  }
   if (demo) {
     document.querySelector('#mode').textContent = publicPreview ? 'Vista previa · cuentas de prueba' : 'Demostración local';
     document.querySelector('#mode').hidden = false;
@@ -529,6 +540,7 @@ start().then(() => { login.querySelector('button').disabled = false; })
   .catch(error => { status.textContent = error.message; });
 </script>
 <script src="./kodama-experience.js?v=mobile-3"></script></html>
+
 
 
 
