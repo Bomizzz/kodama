@@ -122,6 +122,7 @@
   });
   function setLanguage(lang){
     root.lang=lang;
+    message.placeholder=t('Escribe tu mensaje…','Write your message…');
     $('language').textContent=t('English','Español');
     $('language').lang=t('en','es');
     for(const item of document.querySelectorAll('[data-es][data-en]')) item.textContent=item.dataset[lang];
@@ -138,10 +139,12 @@
     event.target.value='';
   };
   const intro=$('splash');
-  if(!sessionStorage.getItem('kodama.intro')&&!reduce.matches){
+  let introSeen = false;
+  try { introSeen = sessionStorage.getItem('kodama.intro') === '1'; } catch {}
+  if(!introSeen&&!reduce.matches){
     intro.hidden=false; document.querySelector('main').inert=true;document.querySelector('.utilities').inert=true;
     $('skip-intro').focus();
-    const finish=()=>{intro.hidden=true;document.querySelector('main').inert=false;document.querySelector('.utilities').inert=false;sessionStorage.setItem('kodama.intro','1');document.querySelector('[data-access=login]')?.focus();};
+    const finish=()=>{intro.hidden=true;document.querySelector('main').inert=false;document.querySelector('.utilities').inert=false;try { sessionStorage.setItem('kodama.intro','1'); } catch {}document.querySelector('[data-access=login]')?.focus();};
     const timer=setTimeout(finish,4000);
     $('skip-intro').onclick=()=>{clearTimeout(timer);finish();};
     intro.onkeydown=event=>{if(event.key==='Escape')$('skip-intro').click();};
@@ -176,9 +179,32 @@
     actionTimer=setTimeout(()=>{delete ghost.dataset.heart;action('idle');nextMove=setTimeout(cycle,3000);},750);
   };
   new MutationObserver(()=>{lastAction=Date.now();cycle();}).observe(stage,{attributes:true,attributeFilter:['data-motion']});
-  control.addEventListener('click',()=>{if(reduce.matches&&stage.dataset.motion==='on')action('slow');});
+  function refreshGhostControl() {
+    const stopped = stage.dataset.motion === 'off';
+    control.textContent = stopped ? t('Animar fantasma','Animate ghost') : t('Pausar fantasma','Pause ghost');
+  }
+  control.addEventListener('click', () => {
+    stage.dataset.motion = ghost.dataset.action === 'still' ? 'on' : 'off';
+    refreshGhostControl();
+  });
+  const ghostVisibility = new MutationObserver(() => {
+    if (!$('home').hidden && !$('panel').hidden) {
+      lastAction = Date.now();
+      if (stage.dataset.motion !== 'off') {
+        clearTimeout(nextMove);
+        action(reduce.matches ? 'slow' : 'idle');
+        nextMove = setTimeout(cycle, 3500);
+      }
+    }
+  });
+  for (const screen of [$('panel'), $('home')]) {
+    ghostVisibility.observe(screen, {attributes:true, attributeFilter:['hidden']});
+  }
   window.addEventListener('resize',()=>{position=0;ghost.style.left='50%';});
   reduce.addEventListener('change',cycle);
   document.addEventListener('pointerdown',()=>{if(ghost.dataset.action==='sleep'){lastAction=Date.now();cycle();}else lastAction=Date.now();});
-  setLanguage(load('kodama.language','es')==='en'?'en':'es');cycle();
+  setLanguage(load('kodama.language','es')==='en'?'en':'es');cycle();refreshGhostControl();
 })();
+
+
+

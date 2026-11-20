@@ -61,3 +61,48 @@ dialog::backdrop{background:#1e132069}dialog a{color:#552c69}
 .feature-card{padding:12px;background:#f8f3f1;border-radius:12px;margin:10px 0}.feature-card h3{margin-top:0}.feature-card p{margin-bottom:6px}
 @media(max-width:420px){#navigation{grid-template-columns:repeat(2,minmax(0,1fr))}.utilities{right:8px}.utilities button{padding:7px 10px}}
 @media(prefers-reduced-motion:reduce){#splash img,.splash-letters b,.clouds{animation:none}#ghost{transition:none}}
+/* Chewy is reserved for the wordmark; UI copy stays clear at small sizes. */
+header .brand { display:flex; font:400 clamp(39px, 9vw, 78px)/1 Chewy, "Arial Rounded MT Bold", system-ui, sans-serif; letter-spacing:.035em; }
+header .brand span { display:inline-block; color:#111; animation:wordmark-wave 3.5s ease-in-out infinite; }
+header .brand span:nth-child(2){animation-delay:.09s}
+header .brand span:nth-child(3){animation-delay:.18s}
+header .brand span:nth-child(4){animation-delay:.27s}
+header .brand span:nth-child(5){animation-delay:.36s}
+header .brand span:nth-child(6){animation-delay:.45s}
+@keyframes wordmark-wave { 0%,52%,100%{transform:translateY(0)} 25%{transform:translateY(-5px)} }
+h2 { font:700 clamp(27px,7vw,43px)/1.12 system-ui,sans-serif; letter-spacing:-.035em; text-wrap:balance; }
+#welcome h2 { font:700 clamp(27px,8vw,45px)/1.08 Gaegu,system-ui,sans-serif; letter-spacing:.025em; }
+#message-form label { margin:10px 0 6px; }
+#message {
+  display:block; min-height:55px; width:100%; position:relative; font-size:16px;
+  padding:12px 15px; border-radius:20px; resize:vertical; scroll-margin-block:60px;
+}
+#message:focus { outline:3px solid #8870ce; outline-offset:2px; }
+.chat-tools { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:8px; }
+.chat-tools button { min-height:46px; }
+#ghost[data-action=slow] .mascot { animation:gentle 5s ease-in-out infinite; }
+@media (max-width: 600px) {
+  body { padding:58px 0 0; display:block; background:#fff; }
+  main, main:has(#panel:not([hidden])) {
+    width:100%; max-width:none; min-height:calc(100dvh - 58px); border:0;
+    border-radius:0; box-shadow:none;
+  }
+  main:has(#panel:not([hidden])) { display:block; }
+  header { padding:14px 16px; }
+  .artwork { width:72px; flex-shrink:0; }
+  .content { padding:18px 16px; }
+  #panel { padding-bottom:calc(85px + env(safe-area-inset-bottom)); }
+  #navigation {
+    position:fixed; z-index:3; bottom:0; left:0; right:0; margin:0;
+    grid-template-columns:repeat(4, minmax(0,1fr)); gap:4px;
+    border-radius:0; border-top:1px solid #e2dce6; background:#fff;
+    padding:8px 7px max(8px, env(safe-area-inset-bottom));
+  }
+  #navigation button { font-size:clamp(.66rem,3.05vw,.88rem); padding:4px 2px; line-height:1.12; min-height:44px; }
+  .utilities { position:absolute; top:5px; }
+  input,textarea,select{font-size:16px}
+  #chat { padding:12px; }
+  body:has(#message:focus) #navigation { visibility:hidden; }
+}
+@media(prefers-reduced-motion:reduce) { header .brand span { animation:none; } }
+
