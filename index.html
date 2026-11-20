@@ -212,10 +212,20 @@ dd { margin: 0 0 8px; }
 <section id="panel" hidden>
 <h2 id="role"></h2>
 <p id="identity"></p>
-<section id="notices" hidden aria-labelledby="notices-heading">
+<button id="admin-open" type="button" data-view="admin" hidden><span data-es="Administración" data-en="Administration">Administración</span></button>
+<section id="admin" data-screen hidden>
+  <h2 data-es="Administración" data-en="Administration">Administración</h2>
+  <section id="notices" hidden aria-labelledby="notices-heading">
   <h3 id="notices-heading">Avisos de acceso</h3>
   <p id="notice-status" role="status"></p>
   <ul id="notice-list"></ul>
+</section>
+  <form id="create" hidden>
+<h3>Crear cuenta de usuario</h3>
+<label>Correo del usuario<input name="email" type="email" required></label>
+<label>Contraseña inicial<input name="password" type="password" required minlength="12" maxlength="72" autocomplete="new-password"></label>
+<button>Crear usuario</button>
+</form>
 </section>
 <nav id="navigation" aria-label="Secciones de Kodama">
   <button type="button" data-view="home"><span data-es="Inicio" data-en="Home">Inicio</span></button>
@@ -223,7 +233,7 @@ dd { margin: 0 0 8px; }
   <button type="button" data-view="progress"><span data-es="Mi progreso" data-en="My progress">Mi progreso</span></button>
   <button type="button" data-view="profile"><span data-es="Yo" data-en="Me">Yo</span></button>
 </nav>
-<section id="home" data-screen><div class="quick"><button type="button" data-dialog="quick" aria-label="Acciones rápidas">+</button><button type="button" data-dialog="search" aria-label="Buscar">⌕</button></div><div class="home-links"><button type="button" data-dialog="about" data-es="Sobre" data-en="About">Sobre</button><button type="button" data-dialog="definitions" data-es="Definiciones" data-en="Definitions">Definiciones</button></div>
+<section id="home" data-screen><h2 data-es="Inicio" data-en="Home">Inicio</h2><div class="quick"><button type="button" data-dialog="quick" aria-label="Acciones rápidas">+</button><button type="button" data-dialog="search" aria-label="Buscar">⌕</button></div><div class="home-links"><button type="button" data-dialog="about" data-es="Sobre" data-en="About">Sobre</button><button type="button" data-dialog="definitions" data-es="Definiciones" data-en="Definitions">Definiciones</button></div>
   <div class="mascot-stage"><img class="mascot" src="Capturadepantalla2026-02-18045839.png" alt="Fantasma de Kodama"></div><button type="button" class="secondary" id="mascot-motion">Animar fantasma</button>
   <div class="resources">
     <details class="video-library"><summary data-es="Videos" data-en="Videos">Videos</summary><div class="video-grid" id="licensed-videos"></div></details>
@@ -231,7 +241,7 @@ dd { margin: 0 0 8px; }
     <details><summary>Definiciones</summary><p>Aún no hay definiciones publicadas.</p></details>
   </div>
 </section>
-<section id="chat" data-screen hidden>
+<section id="chat" data-screen hidden><h2 data-es="Chat" data-en="Chat">Chat</h2>
   <div class="chat-head"><span aria-hidden="true">◉</span><div><h3 data-es="Psicólogo" data-en="Psychologist">Psicólogo</h3><small data-es="Demostración · disponibilidad ilustrativa" data-en="Demo · sample availability">Demostración · disponibilidad ilustrativa</small></div></div>
   <p><span data-es="Vista de demostración del chat. Los mensajes se quedan en esta pantalla." data-en="Chat demonstration. Messages stay on this screen.">Vista de demostración del chat. Los mensajes se quedan en esta pantalla.</span></p>
   <div id="messages" role="log" aria-label="Conversación"><div class="clouds" aria-hidden="true"><span>☁</span><span>☁</span><span>☁</span><span>☁</span></div></div>
@@ -244,19 +254,20 @@ dd { margin: 0 0 8px; }
   </form>
   <p id="chat-status" role="status"></p>
 </section>
-<section id="progress" data-screen hidden>
+<section id="progress" data-screen hidden><h2 data-es="Mi progreso" data-en="My progress">Mi progreso</h2>
 <h3 data-es="Estado de ánimo diario" data-en="Daily mood">Estado de ánimo diario</h3>
 <div class="calendar"><div class="month-head"><button type="button" id="prev-month" aria-label="Mes anterior">‹</button><strong id="calendar-month"></strong><button type="button" id="next-month" aria-label="Mes siguiente">›</button></div><div id="calendar-days"></div></div>
 <form id="mood-form"><fieldset><legend data-es="¿Cómo te sientes hoy?" data-en="How do you feel today?">¿Cómo te sientes hoy?</legend><div id="mood-options"></div></fieldset><label><span data-es="Nota opcional" data-en="Optional note">Nota opcional</span><textarea name="note" maxlength="180" rows="2"></textarea></label><button data-es="Guardar ánimo" data-en="Save mood">Guardar ánimo</button><p id="mood-status" role="status"></p></form>
 </section>
-<section id="profile" data-screen hidden><div class="profile-actions"><button type="button" data-dialog="intro" data-es="Introducción" data-en="Introduction">Introducción</button><button type="button" data-dialog="tags" data-es="+Mis etiquetas" data-en="+My tags">+Mis etiquetas</button><button type="button" data-dialog="goals" data-es="Retos y logros" data-en="Challenges and achievements">Retos y logros</button><button type="button" data-dialog="monitor" data-es="Monitoreo emocional" data-en="Emotional tracking">Monitoreo emocional</button><button type="button" data-dialog="plans" data-es="Plan actual" data-en="Current plan">Plan actual</button><button type="button" data-dialog="schedule" data-es="Historial y agenda" data-en="History and schedule">Historial y agenda</button><button type="button" data-dialog="privacy" data-es="Privacidad" data-en="Privacy">Privacidad</button></div>
+<section id="profile" data-screen hidden><h2 data-es="Yo" data-en="Me">Yo</h2><div class="profile-actions"><button type="button" data-dialog="intro" data-es="Introducción" data-en="Introduction">Introducción</button><button type="button" data-dialog="tags" data-es="+Mis etiquetas" data-en="+My tags">+Mis etiquetas</button><button type="button" data-dialog="goals" data-es="Retos y logros" data-en="Challenges and achievements">Retos y logros</button><button type="button" data-dialog="monitor" data-es="Monitoreo emocional" data-en="Emotional tracking">Monitoreo emocional</button><button type="button" data-dialog="plans" data-es="Plan actual" data-en="Current plan">Plan actual</button><button type="button" data-dialog="schedule" data-es="Historial y agenda" data-en="History and schedule">Historial y agenda</button><button type="button" data-dialog="privacy" data-es="Privacidad" data-en="Privacy">Privacidad</button></div>
   <dl><dt>Usuario</dt><dd id="profile-email"></dd><dt>Descripción</dt><dd>Sin descripción</dd>
     <dt>Etiquetas</dt><dd>Sin etiquetas</dd><dt>Reconocimiento</dt><dd>Sin reconocimientos</dd></dl>
   <details><summary>Retos y Logros</summary><p>Aún no hay retos ni logros.</p></details>
   <details><summary>Evaluaciones</summary><p>Aún no hay evaluaciones.</p></details>
   <button class="secondary" type="button" data-view="terms"><img class="info-icon" src="i.jpg" alt=""> Acerca de</button>
+<form id="logout"><button><span data-es="Cerrar sesión" data-en="Sign out">Cerrar sesión</span></button></form>
 </section>
-<section id="terms" data-screen hidden>
+<section id="terms" data-screen hidden><button type="button" data-view="profile" data-es="Volver a Yo" data-en="Back to profile">Volver a Yo</button>
   <h3>Nuestro Compromiso con la Seguridad y Calidad</h3>
   <p>Texto del proyecto original de App Inventor.</p>
   <article><h3>Seguridad de tus datos:</h3><p>Protegemos tu privacidad cumpliendo con la Ley de Protecci&#243;n de Datos Personales y aplicando cifrado avanzado para garantizar la confidencialidad de tu informaci&#243;n.</p></article>
@@ -266,18 +277,13 @@ dd { margin: 0 0 8px; }
 <article><h3>Innovaci&#243;n:</h3><p>Incorporamos inteligencia artificial para personalizar tus recomendaciones y mejorar tu experiencia.</p></article>
 <article><h3>Responsabilidad social:</h3><p>Apoyamos comunidades vulnerables mediante programas de subsidio y cuidamos el medio ambiente con operaciones sostenibles.</p></article>
 </section>
-<form id="create" hidden>
-<h3>Crear cuenta de usuario</h3>
-<label>Correo del usuario<input name="email" type="email" required></label>
-<label>Contraseña inicial<input name="password" type="password" required minlength="12" maxlength="72" autocomplete="new-password"></label>
-<button>Crear usuario</button>
-</form>
-<form id="logout"><button><span data-es="Cerrar sesión" data-en="Sign out">Cerrar sesión</span></button></form>
+
+
 </section>
 <p id="status" role="status"></p>
 </section>
 </main>
-<link rel="stylesheet" href="./kodama-experience.css?v=mobile-3"><script src="./config.js?v=supabase-1"></script>
+<link rel="stylesheet" href="./kodama-experience.css?v=screens-1"><script src="./config.js?v=supabase-1"></script>
 <script>
 const config = window.KODAMA_CONFIG;
 const publicPreview = location.origin === 'https://bomizzz.github.io' && location.pathname.startsWith('/kodama/');
@@ -331,6 +337,8 @@ document.querySelector('.video-library').addEventListener('toggle', event => {
   if (!event.currentTarget.open) resetVideos();
 });
 function showView(view) {
+  if (view === 'admin' && document.querySelector('#admin-open').hidden) return;
+  panel.dataset.screen = view;
   if (view !== 'home') resetVideos();
   for (const screen of document.querySelectorAll('[data-screen]')) screen.hidden = screen.id !== view;
   for (const button of document.querySelectorAll('#navigation [data-view]')) {
@@ -338,7 +346,16 @@ function showView(view) {
   }
 }
 document.querySelectorAll('[data-view]').forEach(button => {
-  button.addEventListener('click', () => showView(button.dataset.view));
+  button.addEventListener('click', () => {
+    showView(button.dataset.view);
+    const screen = document.getElementById(button.dataset.view);
+    const heading = screen.querySelector('h2, h3');
+    if (heading) {
+      heading.tabIndex = -1;
+      heading.focus({ preventScroll: true });
+    }
+    window.scrollTo(0, 0);
+  });
 });
 const message = document.querySelector('#message');
 const messages = document.querySelector('#messages');
@@ -431,7 +448,8 @@ function show(email, role) {
   document.querySelector('.video-library').open = false;
   document.querySelector('#access-mode').hidden = Boolean(role);
   showAccess(role ? null : 'welcome');
-  showView('home');
+  document.querySelector('#admin-open').hidden = role !== 'admin';
+  showView(role === 'admin' ? 'admin' : 'home');
   greeting.hidden = false;
   messages.replaceChildren(greeting);
   message.value = '';
@@ -539,7 +557,8 @@ login.querySelector('button').disabled = true;
 start().then(() => { login.querySelector('button').disabled = false; })
   .catch(error => { status.textContent = error.message; });
 </script>
-<script src="./kodama-experience.js?v=mobile-3"></script></html>
+<script src="./kodama-experience.js?v=screens-1"></script></html>
+
 
 
 
