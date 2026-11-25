@@ -148,15 +148,12 @@
   sprite.append(guardianArt.content.cloneNode(true));
   const ghost=document.createElement('button');ghost.id='ghost';ghost.type='button';ghost.setAttribute('aria-label','Fantasma de Kodama');
   const wrapper=document.createElement('span');wrapper.className='ghost-sprite';wrapper.append(sprite);ghost.append(wrapper);stage.append(ghost);
-  const control=$('mascot-motion');
-  let actionTimer, nextMove, lastAction=Date.now(), position=0;
+  let actionTimer, nextMove, position=0;
   const action=(name)=>{ghost.dataset.action=name;};
   function cycle(){
     clearTimeout(nextMove);clearTimeout(actionTimer);
-    if(stage.dataset.motion==='off'){action('still');return;}
     if(reduce.matches){action('slow');return;}
-    if(stage.offsetWidth===0){nextMove=setTimeout(cycle,3000);return;}
-    if(Date.now()-lastAction>20000){action('sleep');return;}
+    if(stage.offsetWidth===0)return;
     const choices=['idle','walk','jump','look','wave'];
     const next=choices[Math.floor(Math.random()*choices.length)];
     if(next==='walk'){
@@ -169,28 +166,18 @@
     nextMove=setTimeout(cycle,3000+Math.random()*5000);
   }
   ghost.onclick=()=>{
-    lastAction=Date.now();clearTimeout(nextMove);clearTimeout(actionTimer);
-    if(stage.dataset.motion==='off'||reduce.matches)return;
+    if(reduce.matches)return;
+    clearTimeout(nextMove);clearTimeout(actionTimer);
     action('jump');ghost.dataset.heart='true';
     actionTimer=setTimeout(()=>{delete ghost.dataset.heart;action('idle');nextMove=setTimeout(cycle,3000);},750);
   };
-  new MutationObserver(()=>{lastAction=Date.now();cycle();}).observe(stage,{attributes:true,attributeFilter:['data-motion']});
-  function refreshGhostControl() {
-    const stopped = stage.dataset.motion === 'off';
-    control.textContent = stopped ? t('Animar fantasma','Animate ghost') : t('Pausar fantasma','Pause ghost');
-  }
-  control.addEventListener('click', () => {
-    stage.dataset.motion = ghost.dataset.action === 'still' ? 'on' : 'off';
-    refreshGhostControl();
-  });
   const ghostVisibility = new MutationObserver(() => {
+    clearTimeout(nextMove);
+    clearTimeout(actionTimer);
+    delete ghost.dataset.heart;
     if (!$('home').hidden && !$('panel').hidden) {
-      lastAction = Date.now();
-      if (stage.dataset.motion !== 'off') {
-        clearTimeout(nextMove);
-        action(reduce.matches ? 'slow' : 'idle');
-        nextMove = setTimeout(cycle, 3500);
-      }
+      action(reduce.matches ? 'slow' : 'idle');
+      nextMove = setTimeout(cycle, 3500);
     }
   });
   for (const screen of [$('panel'), $('home')]) {
@@ -198,9 +185,9 @@
   }
   window.addEventListener('resize',()=>{position=0;ghost.style.left='50%';});
   reduce.addEventListener('change',cycle);
-  document.addEventListener('pointerdown',()=>{if(ghost.dataset.action==='sleep'){lastAction=Date.now();cycle();}else lastAction=Date.now();});
-  setLanguage(load('kodama.language','es')==='en'?'en':'es');cycle();refreshGhostControl();
+  setLanguage(load('kodama.language','es')==='en'?'en':'es');cycle();
 })();
+
 
 
 

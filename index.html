@@ -130,9 +130,6 @@ button.secondary:hover:enabled { background: #eedce1; }
   50% { transform: translate(7px, -17px) rotate(7deg); }
 }
 @media (prefers-reduced-motion: reduce) { .mascot { animation: none; } }
-.mascot-stage[data-motion="on"] .mascot { animation: mascot-hover 3s ease-in-out infinite; }
-.mascot-stage[data-motion="off"] .mascot { animation: none; }
-#mascot-motion { display: block; width: auto; margin: -12px 0 14px auto; min-height: 44px; padding: 6px 12px; font-size: .83rem; }
 details { border-bottom: 1px solid var(--line); padding: 10px 2px; }
 summary { cursor: pointer; font-weight: 650; min-height: 28px; }
 .video-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 12px 0 4px; }
@@ -244,7 +241,7 @@ dd { margin: 0 0 8px; }
   <button type="button" data-view="profile"><span data-es="Yo" data-en="Me">Yo</span></button>
 </nav>
 <section id="home" data-screen><h2 data-es="Inicio" data-en="Home">Inicio</h2><div class="quick"><button type="button" data-dialog="quick" aria-label="Acciones rápidas">+</button><button type="button" data-dialog="search" aria-label="Buscar">⌕</button></div><div class="home-links"><button type="button" data-dialog="about" data-es="Sobre" data-en="About">Sobre</button><button type="button" data-dialog="definitions" data-es="Definiciones" data-en="Definitions">Definiciones</button></div>
-  <div class="mascot-stage"><span class="mascot" aria-hidden="true"></span></div><button type="button" class="secondary" id="mascot-motion">Animar fantasma</button>
+  <div class="mascot-stage"><span class="mascot" aria-hidden="true"></span></div>
   <div class="resources">
     <details class="video-library"><summary data-es="Videos" data-en="Videos">Videos</summary><div class="video-grid" id="licensed-videos"></div></details>
     <details><summary><span data-es="Comunidad" data-en="Community">Comunidad</span></summary><p><span data-es="Aún no hay publicaciones." data-en="No posts yet.">Aún no hay publicaciones.</span></p></details>
@@ -293,7 +290,7 @@ dd { margin: 0 0 8px; }
 <p id="status" role="status"></p>
 </section>
 </main>
-<link rel="stylesheet" href="./kodama-experience.css?v=guardian-moods-3"><script src="./config.js?v=supabase-1"></script>
+<link rel="stylesheet" href="./kodama-experience.css?v=guardian-auto-1"><script src="./config.js?v=supabase-1"></script>
 <script>
 const config = window.KODAMA_CONFIG;
 const publicPreview = location.origin === 'https://bomizzz.github.io' && location.pathname.startsWith('/kodama/');
@@ -567,8 +564,9 @@ login.querySelector('button').disabled = true;
 start().then(() => { login.querySelector('button').disabled = false; })
   .catch(error => { status.textContent = error.message; });
 </script>
-<script src="./kodama-experience.js?v=guardian-3d"></script>
+<script src="./kodama-experience.js?v=guardian-auto-1"></script>
 </html>
+
 
 
 

@@ -28,7 +28,6 @@ button.secondary:hover:enabled,#navigation button:hover,.chat-tools button:hover
 #ghost[data-action=idle] .mascot{animation:intro-float 3s ease-in-out infinite}
 #ghost[data-action=look] .mascot{animation:look .65s alternate 4}
 #ghost[data-action=wave] .mascot{animation:wave-ghost .4s alternate 5}
-#ghost[data-action=sleep] .mascot{transform:rotate(-12deg)}
 #ghost[data-action=slow] .mascot{animation:gentle 7s ease-in-out infinite}
 #ghost[data-action=jump] .mascot{animation:jump .6s ease}
 #ghost[data-action=walk] .mascot{animation:gentle .45s alternate infinite}
@@ -359,9 +358,8 @@ main:has(#welcome:not([hidden])) .welcome-wink {
 .guardian { transform-origin:50% 76%; }
 @media (prefers-reduced-motion:no-preference) {
   #ghost .guardian { animation:guardian-breathe 3.8s ease-in-out infinite; }
-  #ghost[data-action=still] .guardian { animation:none; }
   #ghost[data-action=jump] .guardian { animation:guardian-spring .62s ease-in-out both; }
-  #ghost:not([data-action=still]):not([data-action=sleep]) .guardian-eye {
+  #ghost .guardian-eye {
     animation:guardian-blink 5.8s ease-in-out infinite;
   }
   #ghost[data-action=idle] .mascot { animation:guardian-hover 4.1s ease-in-out infinite; }
@@ -456,11 +454,11 @@ main:has(#welcome:not([hidden])) .welcome-wink {
 .guardian-hem i:nth-child(2) { --hem-delay:.14s; }
 .guardian-hem i:nth-child(3) { --hem-delay:.28s; }
 @media (prefers-reduced-motion:no-preference) {
-  #ghost:not([data-action=still]):not([data-action=sleep]) .guardian-arm,
+  #ghost .guardian-arm,
   main:has(#welcome:not([hidden])) .welcome-ghost .guardian-arm {
     animation:guardian-arm-sway 3.7s ease-in-out infinite;
   }
-  #ghost:not([data-action=still]):not([data-action=sleep]) .guardian-hem i,
+  #ghost .guardian-hem i,
   main:has(#welcome:not([hidden])) .welcome-ghost .guardian-hem i {
     animation:guardian-hem-wave 2.9s var(--hem-delay,0s) ease-in-out infinite;
   }
@@ -557,4 +555,5 @@ main:has(#welcome:not([hidden])) .welcome-wink {
   background:radial-gradient(ellipse at 33% 32%,#fff7f5 0 14%,transparent 22%),
     linear-gradient(#65455f,#98708e);
 }
+
 
