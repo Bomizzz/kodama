@@ -542,3 +542,19 @@ main:has(#welcome:not([hidden])) .welcome-wink {
 .mood-guardian-5 .guardian-smile {
   border:0; border-bottom:2px solid #49304e; left:44%; width:15%; transform:rotate(12deg); border-radius:0;
 }
+
+/* A small catchlight adds depth while retaining each sticker's eye shape. */
+.mood-guardian .guardian-eye,.mood-guardian .guardian-eye.welcome-wink {
+  background:radial-gradient(ellipse at 33% 27%,#fff9f7 0 17%,transparent 22%),
+    radial-gradient(ellipse at 68% 77%,#a8779b,#60405f 57%,#49304e);
+}
+.mood-guardian-1 .guardian-eye,.mood-guardian-1 .guardian-eye.welcome-wink {
+  background:linear-gradient(90deg,#684c66 8%,#d8b0c8 40%,#906482 68%,#684c66 100%);
+}
+.mood-guardian-3 .guardian-eye,.mood-guardian-3 .guardian-eye.welcome-wink {
+  background:transparent; border-top-color:#956a8d; border-left-color:#715171;
+}
+.mood-guardian-5 .guardian-eye,.mood-guardian-5 .guardian-eye.welcome-wink {
+  background:radial-gradient(ellipse at 33% 32%,#fff7f5 0 14%,transparent 22%),
+    linear-gradient(#65455f,#98708e);
+}
