@@ -640,3 +640,12 @@ main:has(#welcome:not([hidden])) .welcome-wink {
   background:radial-gradient(ellipse at 50% 93%,#f58291 0 43%,transparent 47%),#6b313b;
 }
 
+
+.welcome-ghost .guardian-eye::before,#ghost .guardian-eye::before {
+  content:""; top:-65%; left:-7%; width:114%; height:45%;
+  background:none; border:0; border-top:1.7px solid #805a54;
+  border-radius:55% 55% 0 0;
+  transform:none;
+}
+.welcome-ghost .guardian-eye-left::before,#ghost .guardian-eye-left::before { transform:rotate(-8deg); }
+.welcome-ghost .guardian-eye-right::before,#ghost .guardian-eye-right::before { transform:rotate(8deg); }
