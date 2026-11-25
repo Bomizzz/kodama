@@ -498,3 +498,47 @@ main:has(#welcome:not([hidden])) .welcome-wink {
   background:radial-gradient(ellipse at 34% 22%,#fff9fb 0%,#fde2ec 42%,#efb4cc 88%);
   box-shadow:inset -.14em -.08em .34em #c98aa226;
 }
+
+/* Readable miniature expressions for the six mood stickers. */
+.mood-guardian .guardian-eye,.mood-guardian .guardian-eye.welcome-wink {
+  width:11%; height:15%; top:42%; background:#49304e; transform:none;
+}
+.mood-guardian .guardian-smile {
+  top:59%; left:42%; width:16%; height:11%; border:0; transform:none;
+}
+.mood-guardian .guardian-eye::before {
+  content:""; position:absolute; width:145%; height:22%; top:-53%; left:-20%;
+  border-radius:999px; background:#71526f;
+}
+.mood-guardian-0 .guardian-eye-left { top:39%; }
+.mood-guardian-0 .guardian-eye-left::before { transform:translateY(-2px) rotate(-21deg); }
+.mood-guardian-0 .guardian-eye-right::before { transform:rotate(22deg); }
+.mood-guardian-0 .guardian-smile { border-top:1.5px solid #49304e; transform:rotate(-15deg); top:61%; }
+.mood-guardian-1 .guardian-eye,.mood-guardian-1 .guardian-eye.welcome-wink {
+  height:5%; top:48%; background:#684c66;
+}
+.mood-guardian-1 .guardian-eye::before { display:none; }
+.mood-guardian-1 .guardian-smile { border-top:1.5px solid #684c66; top:63%; width:12%; left:44%; }
+.mood-guardian-2 .guardian-eye-left::before { transform:rotate(32deg); }
+.mood-guardian-2 .guardian-eye-right::before { transform:rotate(-32deg); }
+.mood-guardian-2 .guardian-smile { border-top:2px solid #49304e; border-radius:80% 80% 0 0; }
+.mood-guardian-3 .guardian-eye,.mood-guardian-3 .guardian-eye.welcome-wink {
+  height:11%; border:1.5px solid #49304e; border-bottom:0; border-radius:70% 70% 0 0; background:none;
+}
+.mood-guardian-3 .guardian-eye::before { display:none; }
+.mood-guardian-3 .guardian-smile { border-radius:0 0 70% 70%; background:#a65372; }
+.mood-guardian-4 .guardian-eye,.mood-guardian-4 .guardian-eye.welcome-wink { height:18%; width:12%; }
+.mood-guardian-4 .guardian-eye-left::before { transform:rotate(-29deg); }
+.mood-guardian-4 .guardian-eye-right::before { transform:rotate(29deg); }
+.mood-guardian-4 .guardian-smile { background:#725070; border-radius:50%; width:10%; left:46%; height:13%; }
+.mood-guardian-4 .guardian-cheek-left::after {
+  content:""; position:absolute; top:20%; left:50%; width:38%; height:135%;
+  border-radius:65% 40% 60% 50%; background:#7cb9e0; transform:rotate(16deg);
+}
+.mood-guardian-5 .guardian-eye,.mood-guardian-5 .guardian-eye.welcome-wink {
+  height:8%; top:45%; border-radius:0 0 50% 50%;
+}
+.mood-guardian-5 .guardian-eye::before { top:-26%; transform:rotate(-8deg); }
+.mood-guardian-5 .guardian-smile {
+  border:0; border-bottom:2px solid #49304e; left:44%; width:15%; transform:rotate(12deg); border-radius:0;
+}
