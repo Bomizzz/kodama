@@ -186,3 +186,77 @@ main .replay-welcome .brand span:nth-child(3) { animation-delay:.18s; }
 main .replay-welcome .brand span:nth-child(4) { animation-delay:.27s; }
 main .replay-welcome .brand span:nth-child(5) { animation-delay:.36s; }
 main .replay-welcome .brand span:nth-child(6) { animation-delay:.45s; }
+
+/* Original Kodama guardian. The eyes are independent so the wink is a facial movement. */
+.artwork:has(.guardian) {
+  border:0; padding:0;
+  background:radial-gradient(ellipse at 51% 49%,#fff8eead 0%,#fff5e462 38%,transparent 70%);
+  border-radius:0;
+}
+.welcome-ghost { aspect-ratio:1; width:100%; }
+.guardian { position:absolute; inset:8% 15% 17% 16%; }
+.guardian-body {
+  position:absolute; inset:9% 3% 0 0; border-radius:48% 51% 42% 37% / 50% 53% 36% 36%;
+  background:radial-gradient(ellipse at 34% 24%,#fff 0%,#fffdf7 29%,#f4effa 63%,#d7c9e7 100%);
+  box-shadow:inset -0.38em -0.44em .75em #bca4d05e,inset .3em .28em .65em #fff8,0 .25em .65em #70538d20;
+}
+.guardian-tail {
+  position:absolute; width:48%; height:37%; right:-6%; bottom:0;
+  border-radius:52% 13% 68% 44%; transform:rotate(-23deg);
+  background:linear-gradient(157deg,#f8f1fd,#ded0eb 80%);
+}
+.guardian-leaf {
+  position:absolute; z-index:2; height:22%; width:27%; left:37%; top:0;
+  border-radius:80% 8% 78% 24%; transform:rotate(-14deg);
+  background:linear-gradient(145deg,#e3f6d6 7%,#9ac8aa 55%,#649e8f);
+  box-shadow:inset 0 -.15em .25em #4e8c7455;
+}
+.guardian-leaf::after { content:""; position:absolute; inset:48% 18% 44% 17%; background:#487c674d; transform:rotate(-22deg); border-radius:50%; }
+.guardian-arm {
+  position:absolute; width:21%; height:21%; left:-3%; top:56%; transform:rotate(-27deg);
+  border-radius:60%; background:linear-gradient(145deg,#fff9f3,#e5daef);
+}
+.guardian-eye, .guardian-eye.welcome-wink {
+  position:absolute; top:51%; width:7.4%; height:12.3%; border:0; border-radius:50%;
+  background:radial-gradient(circle at 35% 24%,#fff 0 12%,transparent 16%),#342642;
+  transform:none; opacity:1;
+}
+.guardian-eye-left { left:28%; }
+.guardian-eye.guardian-eye-right { left:60%; }
+.guardian-cheek { position:absolute; top:65%; width:18%; height:11%; border-radius:50%; background:radial-gradient(ellipse,#ec87a49e, #f4b7c237 67%,transparent 72%); }
+.guardian-cheek-left { left:12%; }
+.guardian-cheek-right { left:66%; }
+.guardian-smile { position:absolute; top:60%; left:44%; width:11%; height:9%; border:solid #57405e; border-width:0 0 .11em; border-radius:0 0 60% 60%; transform:rotate(-5deg); }
+.guardian-shadow { position:absolute; left:21%; right:13%; bottom:6%; height:13%; background:radial-gradient(ellipse,#88699f4c,transparent 69%); }
+main:has(#welcome:not([hidden])) .brand span { animation:wordmark-wave 1.85s cubic-bezier(.23,.75,.32,1) both; }
+main:has(#welcome:not([hidden])) .replay-welcome .brand span { animation:wordmark-wave 1.85s cubic-bezier(.23,.75,.32,1) both; }
+main .brand span:nth-child(2) { animation-delay:.07s; }
+main .brand span:nth-child(3) { animation-delay:.14s; }
+main .brand span:nth-child(4) { animation-delay:.21s; }
+main .brand span:nth-child(5) { animation-delay:.28s; }
+main .brand span:nth-child(6) { animation-delay:.35s; }
+main:has(#welcome:not([hidden])) .welcome-ghost,
+main:has(#welcome:not([hidden])) .replay-welcome .welcome-ghost { animation:welcome-flight 1.85s cubic-bezier(.18,.73,.24,1) both; }
+main:has(#welcome:not([hidden])) .welcome-wink,
+main:has(#welcome:not([hidden])) .replay-welcome .welcome-wink { animation:welcome-wink .32s 1.82s ease-in-out both; }
+@keyframes wordmark-wave {
+  0% { opacity:0; transform:translate(-.16em,.28em) rotate(-9deg); }
+  58% { opacity:1; transform:translate(.025em,-.075em) rotate(3deg); }
+  82% { transform:translateY(.025em) rotate(-1deg); }
+  100% { transform:translate(0,0) rotate(0); }
+}
+@keyframes welcome-flight {
+  0% { opacity:0; transform:translate(124%,16%) rotate(15deg) scale(.77); }
+  36% { opacity:1; }
+  68% { transform:translate(-7%,-9%) rotate(-6deg) scale(1.02); }
+  86% { transform:translate(2%,2%) rotate(2deg); }
+  100% { opacity:1; transform:translate(0,0) rotate(0) scale(1); }
+}
+@keyframes welcome-wink {
+  0%,100% { transform:scaleY(1); }
+  36%,68% { transform:scaleY(.16) rotate(-8deg); }
+}
+body:has(#splash:not([hidden])) main:has(#welcome:not([hidden])) :is(.brand span,.welcome-ghost,.welcome-wink) { animation:none; }
+@media(prefers-reduced-motion:reduce) {
+  main:has(#welcome:not([hidden])) header:not(.replay-welcome) :is(.brand span,.welcome-ghost,.welcome-wink) { animation:none; }
+}
