@@ -141,3 +141,34 @@ main:has(#panel:not([hidden])) > header { align-self:stretch; }
   #panel[data-active-view="chat"] [data-screen]:not([hidden]) { min-height:0; }
 }
 
+
+/* The welcome flight starts after the introductory overlay closes. */
+.welcome-ghost { position:relative; }
+.welcome-wink {
+  position:absolute; top:41.5%; left:57%; width:4%; height:2.9%;
+  border-radius:50%; background:#fbfcff; border-bottom:2px solid #493220;
+  transform:translate(-50%,-50%); opacity:0;
+}
+main:has(#welcome:not([hidden])) .welcome-ghost {
+  animation: welcome-flight 1.35s cubic-bezier(.22,.8,.24,1) both;
+}
+main:has(#welcome:not([hidden])) .welcome-wink {
+  animation: welcome-wink .48s 1.4s both;
+}
+body:has(#splash:not([hidden])) main .welcome-ghost,
+body:has(#splash:not([hidden])) main .welcome-wink,
+body:has(#splash:not([hidden])) main .brand span { animation-name:none; }
+@keyframes welcome-flight {
+  0% { transform:translate(115%,24%) rotate(24deg) scale(.6); opacity:0; }
+  34% { opacity:1; }
+  73% { transform:translate(-8%,-8%) rotate(-7deg) scale(1.03); }
+  100% { transform:translate(0,0) rotate(0) scale(1); opacity:1; }
+}
+@keyframes welcome-wink {
+  0%,100% { opacity:0; }
+  20%,72% { opacity:1; }
+}
+@media(prefers-reduced-motion:reduce) {
+  main:has(#welcome:not([hidden])) .welcome-ghost,
+  main:has(#welcome:not([hidden])) .welcome-wink { animation:none; }
+}
