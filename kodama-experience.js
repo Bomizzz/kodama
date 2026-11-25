@@ -24,6 +24,12 @@
     ['Respiración diafragmática guiada','Guided diaphragmatic breathing'],['Mindfulness de 5 minutos','Five-minute mindfulness'],
     ['Qué es la ansiedad','What is anxiety?'],['Manejo del estrés','Managing stress'],['Estigma y salud mental','Mental health stigma'],['Primera ayuda psicológica','Psychological first aid']
   ];
+  const guardianArt = $('guardian-art');
+  document.querySelector('.guardian-art-slot').append(guardianArt.content.cloneNode(true));
+  function moodGuardian(index, symbol, tint) {
+    return '<span class="mood-guardian mood-guardian-'+index+'" style="--mood-tint:'+tint+'" aria-hidden="true">'
+      + guardianArt.innerHTML + '<span class="mood-symbol">'+symbol+'</span></span>';
+  }
   const moods = [['Confusión','Confused','?','#efc9ee'],['Cansancio','Tired','–','#cfe0f3'],['Enojo','Angry','!','#f5b7ad'],['Cariño','Affectionate','♥','#f2a7b5'],['Tristeza o miedo','Sad or scared','✦','#dbd0f6'],['Molestia','Annoyed','☁','#c9d2ac']];
   const card = (title,body) => '<article class="feature-card"><h3>'+title+'</h3>'+body+'</article>';
   const link = (url,label) => '<a href="'+url+'" target="_blank" rel="noopener noreferrer">'+label+'</a>';
@@ -48,7 +54,7 @@
     }
     $('calendar-days').innerHTML=days.join('');
     const selected=$('mood-form').elements.mood?.value;
-    $('mood-options').innerHTML=moods.map((m,i)=>'<label><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="31" fill="'+m[3]+'"/><path d="M14 47V30a18 18 0 0 1 36 0v17l-6-4-6 4-6-4-6 4-6-4z" fill="#fff" stroke="#665062"/><circle cx="25" cy="33" r="2" fill="#251c29"/><circle cx="39" cy="33" r="2" fill="#251c29"/><text x="46" y="21" font-size="19" fill="#9c3655">'+m[2]+'</text></svg><input type="radio" name="mood" required value="'+i+'" '+(selected===String(i)?'checked':'')+'><span>'+t(m[0],m[1])+'</span></label>').join('');
+    $('mood-options').innerHTML=moods.map((m,i)=>'<label>'+moodGuardian(i,m[2],m[3])+'<input type="radio" name="mood" required value="'+i+'" '+(selected===String(i)?'checked':'')+'><span>'+t(m[0],m[1])+'</span></label>').join('');
   }
   $('prev-month').onclick = () => { month.setMonth(month.getMonth()-1); drawCalendar(); };
   $('next-month').onclick = () => { month.setMonth(month.getMonth()+1); drawCalendar(); };
@@ -138,7 +144,8 @@
     if(event.target.files.length)$('chat-status').textContent=t('Archivo seleccionado para la demo. No se enviará.','File selected for this demo. It will not be sent.');
     event.target.value='';
   };
-  const stage=document.querySelector('.mascot-stage'), sprite=stage.querySelector('img');
+  const stage=document.querySelector('.mascot-stage'), sprite=stage.querySelector('.mascot');
+  sprite.append(guardianArt.content.cloneNode(true));
   const ghost=document.createElement('button');ghost.id='ghost';ghost.type='button';ghost.setAttribute('aria-label','Fantasma de Kodama');
   const wrapper=document.createElement('span');wrapper.className='ghost-sprite';wrapper.append(sprite);ghost.append(wrapper);stage.append(ghost);
   const control=$('mascot-motion');
@@ -153,7 +160,7 @@
     const choices=['idle','walk','jump','look','wave'];
     const next=choices[Math.floor(Math.random()*choices.length)];
     if(next==='walk'){
-      const limit=Math.max(0,stage.clientWidth/2-50), x=(Math.random()*2-1)*limit;
+      const limit=Math.max(0,stage.clientWidth/2-60), x=(Math.random()*2-1)*limit;
       ghost.dataset.facing=x<position?'left':'right';position=x;
       ghost.style.left='calc(50% + '+x+'px)';
     }
@@ -194,6 +201,7 @@
   document.addEventListener('pointerdown',()=>{if(ghost.dataset.action==='sleep'){lastAction=Date.now();cycle();}else lastAction=Date.now();});
   setLanguage(load('kodama.language','es')==='en'?'en':'es');cycle();refreshGhostControl();
 })();
+
 
 
 

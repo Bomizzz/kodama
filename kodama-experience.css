@@ -317,3 +317,41 @@ main:has(#welcome:not([hidden])) .welcome-wink {
   border-radius:90% 10% 75% 20%; transform:rotate(-14deg);
   background:linear-gradient(145deg,#c6dea0,#579576);
 }
+
+/* All Kodama sprites share the same soft 3D character. */
+.guardian-art-slot,.guardian-art { width:100%; height:100%; position:relative; display:block; }
+.guardian-body {
+  border-radius:51% 51% 23% 23% / 55% 55% 22% 22%;
+  background:radial-gradient(ellipse at 31% 23%,#fff 0%,#fffdf6 27%,#faf1f8 56%,#dcd1e7 89%,#c2afd7 100%);
+  box-shadow:inset -.44em -.42em .73em #a285bf59,inset .25em .24em .5em #fff9;
+}
+.guardian-body::after {
+  content:""; position:absolute; inset:9% auto auto 18%; width:38%; height:15%;
+  border-radius:50%; transform:rotate(-22deg); background:radial-gradient(ellipse,#fff 0%,#ffffff60 55%,transparent 75%);
+}
+.guardian-cheek { background:radial-gradient(ellipse,#f39dafd9,#f4b7c250 61%,transparent 75%); }
+.guardian-eye,.guardian-eye.welcome-wink {
+  width:8%; height:13%; background:radial-gradient(circle at 32% 25%,#fff 0 13%,transparent 16%),
+    radial-gradient(ellipse at 58% 82%,#79627e,#3a2c48 51%);
+}
+#ghost { width:116px; height:116px; }
+#ghost .mascot { width:112px; height:112px; image-rendering:auto; mix-blend-mode:normal; }
+#ghost .ghost-sprite { display:block; }
+.mascot-stage { background:radial-gradient(ellipse at 50% 48%,#f5bdca88,transparent 62%),#fffaf887; }
+#mood-options .mood-guardian {
+  width:min(100%,72px); aspect-ratio:1; position:relative; display:block; font-size:9px;
+  border-radius:50%; background:radial-gradient(ellipse,var(--mood-tint),transparent 72%);
+}
+.mood-guardian .guardian-apple { display:none; }
+.mood-guardian .guardian-arm-left { left:10%; }
+.mood-guardian .guardian-arm-right { right:10%; }
+.mood-symbol {
+  position:absolute; z-index:3; top:4%; right:8%; color:#87435e;
+  font-weight:900; font-size:1.15rem; text-shadow:0 1px 1px white;
+}
+.mood-guardian-1 .guardian-eye,.mood-guardian-1 .guardian-eye.welcome-wink { transform:scaleY(.42); }
+.mood-guardian-2 .guardian-eye-left { transform:rotate(21deg); }
+.mood-guardian-2 .guardian-eye-right { transform:rotate(-21deg); }
+.mood-guardian-3 .guardian-cheek { transform:scale(1.25); }
+.mood-guardian-4 .guardian-smile { border-width:.12em; border-radius:50%; }
+.mood-guardian-5 .guardian-smile { transform:rotate(180deg); }
