@@ -172,3 +172,17 @@ body:has(#splash:not([hidden])) main .brand span { animation-name:none; }
   main:has(#welcome:not([hidden])) .welcome-ghost,
   main:has(#welcome:not([hidden])) .welcome-wink { animation:none; }
 }
+
+#replay-welcome { width:auto; padding:6px 14px; margin:0 0 12px; }
+main:has(#welcome:not([hidden])) .replay-welcome .welcome-ghost {
+  animation:welcome-flight 1.35s cubic-bezier(.22,.8,.24,1) both;
+}
+main:has(#welcome:not([hidden])) .replay-welcome .welcome-wink {
+  animation:welcome-wink .48s 1.4s both;
+}
+main:has(#welcome:not([hidden])) .replay-welcome .brand span { animation:wordmark-wave 1.5s 2; }
+main .replay-welcome .brand span:nth-child(2) { animation-delay:.09s; }
+main .replay-welcome .brand span:nth-child(3) { animation-delay:.18s; }
+main .replay-welcome .brand span:nth-child(4) { animation-delay:.27s; }
+main .replay-welcome .brand span:nth-child(5) { animation-delay:.36s; }
+main .replay-welcome .brand span:nth-child(6) { animation-delay:.45s; }

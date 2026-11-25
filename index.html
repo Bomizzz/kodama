@@ -181,7 +181,7 @@ dd { margin: 0 0 8px; }
 <main>
 <header><div class="brand-lockup"><h1 class="brand" aria-label="Kodama"><span aria-hidden="true">K</span><span aria-hidden="true">O</span><span aria-hidden="true">D</span><span aria-hidden="true">A</span><span aria-hidden="true">M</span><span aria-hidden="true">A</span></h1><p id="mode" hidden>Demostración local</p></div><div class="artwork"><div class="welcome-ghost"><img class="logo" src="KODAMALOGO.jpeg" alt="Mascota de Kodama con una manzana"><span class="welcome-wink" aria-hidden="true"></span></div></div></header>
 <section class="content">
-<section id="welcome">
+<section id="welcome"><button type="button" id="replay-welcome" class="secondary" data-es="Ver animación" data-en="Replay animation">Ver animación</button>
   <h2 data-es="Tu espacio seguro" data-en="Your safe space">Tu espacio seguro</h2>
   <button type="button" data-access="login"><span data-es="Iniciar sesión" data-en="Sign in">Iniciar sesión</span></button>
   <button class="secondary" type="button" data-access="register"><span data-es="Registrarse" data-en="Register">Registrarse</span></button>
@@ -283,7 +283,7 @@ dd { margin: 0 0 8px; }
 <p id="status" role="status"></p>
 </section>
 </main>
-<link rel="stylesheet" href="./kodama-experience.css?v=welcome-1"><script src="./config.js?v=supabase-1"></script>
+<link rel="stylesheet" href="./kodama-experience.css?v=welcome-2"><script src="./config.js?v=supabase-1"></script>
 <script>
 const config = window.KODAMA_CONFIG;
 const publicPreview = location.origin === 'https://bomizzz.github.io' && location.pathname.startsWith('/kodama/');
@@ -557,7 +557,17 @@ login.querySelector('button').disabled = true;
 start().then(() => { login.querySelector('button').disabled = false; })
   .catch(error => { status.textContent = error.message; });
 </script>
-<script src="./kodama-experience.js?v=screens-2"></script></html>
+<script src="./kodama-experience.js?v=screens-2"></script><script>
+document.getElementById('replay-welcome').addEventListener('click', () => {
+  const header = document.querySelector('main > header');
+  header.classList.remove('replay-welcome');
+  void header.offsetWidth;
+  header.classList.add('replay-welcome');
+  header.scrollIntoView({ block: 'start', behavior: 'instant' });
+});
+</script>
+</html>
+
 
 
 
