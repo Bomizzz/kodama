@@ -301,22 +301,9 @@ main:has(#welcome:not([hidden])) .welcome-wink {
 .guardian-arm::after { content:none; }
 .guardian-arm-left { left:19%; transform:rotate(22deg); }
 .guardian-arm-right { left:auto; right:19%; transform:rotate(-22deg); }
-.guardian-apple {
-  position:absolute; z-index:1; top:72%; left:50%; width:24%; height:22%;
-  transform:translateX(-50%) rotate(-7deg);
-  border-radius:43% 49% 53% 49% / 42% 43% 60% 59%;
-  background:radial-gradient(ellipse at 27% 24%,#ffd0c5 0%,#f7898c 20%,#dc455b 51%,#ac2640 95%);
-  box-shadow:inset -.1em -.13em .18em #76213955,0 .15em .27em #783a5339;
-}
-.guardian-apple::before {
-  content:""; position:absolute; width:9%; height:30%; left:52%; top:-20%;
-  border-radius:999px; transform:rotate(11deg); background:#65463c;
-}
-.guardian-apple::after {
-  content:""; position:absolute; width:38%; height:25%; left:53%; top:-14%;
-  border-radius:90% 10% 75% 20%; transform:rotate(-14deg);
-  background:linear-gradient(145deg,#c6dea0,#579576);
-}
+
+
+
 
 /* All Kodama sprites share the same soft 3D character. */
 .guardian-art-slot,.guardian-art { width:100%; height:100%; position:relative; display:block; }
@@ -342,7 +329,6 @@ main:has(#welcome:not([hidden])) .welcome-wink {
   width:min(100%,72px); aspect-ratio:1; position:relative; display:block; font-size:9px;
   border-radius:50%; background:radial-gradient(ellipse,var(--mood-tint),transparent 72%);
 }
-.mood-guardian .guardian-apple { display:none; }
 .mood-guardian .guardian-arm-left { left:10%; }
 .mood-guardian .guardian-arm-right { right:10%; }
 .mood-symbol {
@@ -370,9 +356,7 @@ main:has(#welcome:not([hidden])) .welcome-wink {
 .guardian-arm {
   background:radial-gradient(ellipse at 30% 22%,#fffdfa,#f4ebf5 52%,#d6c8e5);
 }
-.guardian-apple {
-  background:radial-gradient(ellipse at 30% 25%,#ffe0d3 0%,#fa9299 15%,#dd485d 48%,#a62646 93%);
-}
+
 .guardian { transform-origin:50% 76%; }
 @media (prefers-reduced-motion:no-preference) {
   #ghost .guardian { animation:guardian-breathe 3.8s ease-in-out infinite; }
@@ -442,4 +426,75 @@ main:has(#welcome:not([hidden])) .welcome-wink {
   #mood-options label:has(input:checked) .guardian {
     animation:guardian-spring .62s ease-in-out both;
   }
+}
+
+/* Pose the hands below the face. Each arm is anchored at its own shoulder. */
+.guardian-arm {
+  top:67%; width:22%; height:14%;
+  border-radius:55% 48% 57% 50%;
+  background:radial-gradient(ellipse at 39% 24%,#fffdf8 4%,#f5edf6 54%,#d8c9e4);
+  box-shadow:inset 0 -.13em .2em #9a7aaf28,0 .12em .24em #78549e22;
+}
+.guardian-arm-left { left:8%; transform-origin:12% 37%; rotate:22deg; transform:none; }
+.guardian-arm-right { right:8%; left:auto; transform-origin:88% 37%; rotate:-22deg; transform:none; }
+.mood-guardian .guardian-arm-left { left:8%; }
+.mood-guardian .guardian-arm-right { right:8%; }
+.guardian-hem {
+  position:absolute; display:flex; left:9%; right:9%; bottom:-1%; height:22%;
+  justify-content:center; pointer-events:none;
+}
+.guardian-hem i {
+  display:block; position:relative; width:36%; height:89%; margin:0 -1%;
+  border-radius:24% 30% 54% 50%;
+  transform-origin:50% 14%;
+  background:radial-gradient(ellipse at 37% 24%,#f5edf7,#e3d4ec 65%,#d0bbdf);
+  box-shadow:inset 0 -.12em .25em #a789be33;
+}
+.guardian-body { bottom:9%; }
+.guardian-cheek { top:59%; }
+.guardian-arm-left { --arm-sway:13deg; }
+.guardian-arm-right { --arm-sway:-13deg; }
+.guardian-hem i:nth-child(2) { --hem-delay:.14s; }
+.guardian-hem i:nth-child(3) { --hem-delay:.28s; }
+@media (prefers-reduced-motion:no-preference) {
+  #ghost:not([data-action=still]):not([data-action=sleep]) .guardian-arm,
+  main:has(#welcome:not([hidden])) .welcome-ghost .guardian-arm {
+    animation:guardian-arm-sway 3.7s ease-in-out infinite;
+  }
+  #ghost:not([data-action=still]):not([data-action=sleep]) .guardian-hem i,
+  main:has(#welcome:not([hidden])) .welcome-ghost .guardian-hem i {
+    animation:guardian-hem-wave 2.9s var(--hem-delay,0s) ease-in-out infinite;
+  }
+  main:has(#welcome:not([hidden])) .welcome-ghost .guardian {
+    animation:guardian-breathe 4.15s ease-in-out infinite;
+  }
+  #mood-options label:has(input:checked) .guardian-arm { animation:guardian-arm-sway .65s ease-in-out; }
+  #mood-options label:has(input:checked) .guardian-hem i { animation:guardian-hem-wave .6s var(--hem-delay,0s) ease-in-out; }
+}
+@keyframes guardian-arm-sway {
+  0%,100% { transform:rotate(0) translateY(0); }
+  42% { transform:rotate(var(--arm-sway)) translateY(-9%); }
+  74% { transform:rotate(calc(var(--arm-sway) * -.45)) translateY(5%); }
+}
+@keyframes guardian-hem-wave {
+  0%,100% { transform:translateY(0) skewX(0) scaleY(1); }
+  36% { transform:translateY(-8%) skewX(-7deg) scaleY(.91); }
+  72% { transform:translateY(8%) skewX(7deg) scaleY(1.08); }
+}
+@keyframes guardian-hover {
+  0%,100% { transform:translate(0,0) rotate(0); }
+  24% { transform:translate(-3%,-5%) rotate(-2deg); }
+  55% { transform:translate(2%,-7%) rotate(2deg); }
+  78% { transform:translate(4%,-3%) rotate(1deg); }
+}
+/* Cloud lobes use matched lighting and stay in their existing positions. */
+.chat-cloud {
+  isolation:isolate;
+  background:radial-gradient(ellipse at 35% 24%,#fff3f7 4%,#f9cbda 48%,#e7a9c4 91%);
+  box-shadow:inset -.14em -.19em .42em #bd789f2f,0 4px 8px #a85c7f20;
+}
+.chat-cloud::before,.chat-cloud::after {
+  z-index:-1;
+  background:radial-gradient(ellipse at 34% 22%,#fff9fb 0%,#fde2ec 42%,#efb4cc 88%);
+  box-shadow:inset -.14em -.08em .34em #c98aa226;
 }
