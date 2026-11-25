@@ -29,7 +29,6 @@ button.secondary:hover:enabled,#navigation button:hover,.chat-tools button:hover
 #ghost[data-action=look] .mascot{animation:look .65s alternate 4}
 #ghost[data-action=wave] .mascot{animation:wave-ghost .4s alternate 5}
 #ghost[data-action=sleep] .mascot{transform:rotate(-12deg)}
-#ghost[data-action=sleep]::after{content:'Zzz';color:#554378;position:absolute;right:-9px;top:0;font-weight:800}
 #ghost[data-action=slow] .mascot{animation:gentle 7s ease-in-out infinite}
 #ghost[data-action=jump] .mascot{animation:jump .6s ease}
 #ghost[data-action=walk] .mascot{animation:gentle .45s alternate infinite}
@@ -558,3 +557,4 @@ main:has(#welcome:not([hidden])) .welcome-wink {
   background:radial-gradient(ellipse at 33% 32%,#fff7f5 0 14%,transparent 22%),
     linear-gradient(#65455f,#98708e);
 }
+
