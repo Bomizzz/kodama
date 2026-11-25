@@ -260,3 +260,33 @@ body:has(#splash:not([hidden])) main:has(#welcome:not([hidden])) :is(.brand span
 @media(prefers-reduced-motion:reduce) {
   main:has(#welcome:not([hidden])) header:not(.replay-welcome) :is(.brand span,.welcome-ghost,.welcome-wink) { animation:none; }
 }
+
+/* Move one letter at a time and give the guardian a scalloped ghost silhouette. */
+main:has(#welcome:not([hidden])) .brand span,
+main:has(#welcome:not([hidden])) .replay-welcome .brand span {
+  animation:wordmark-wave .46s cubic-bezier(.23,.75,.32,1) var(--letter-start,0s) both;
+}
+main .brand span:nth-child(2) { --letter-start:.46s; }
+main .brand span:nth-child(3) { --letter-start:.92s; }
+main .brand span:nth-child(4) { --letter-start:1.38s; }
+main .brand span:nth-child(5) { --letter-start:1.84s; }
+main .brand span:nth-child(6) { --letter-start:2.30s; }
+.guardian { inset:5% 11% 13% 11%; }
+.guardian-tail { display:none; }
+.guardian-body {
+  inset:10% 8% 0;
+  border-radius:52% 52% 0 0 / 53% 53% 0 0;
+  clip-path:polygon(0 0,100% 0,100% 88%,98% 94%,94% 97%,89% 97%,83% 94%,78% 89%,74% 88%,69% 91%,64% 97%,59% 100%,53% 100%,47% 96%,42% 91%,37% 88%,32% 90%,27% 96%,22% 99%,15% 99%,8% 96%,3% 91%,0 86%);
+}
+.guardian-arm { left:0; top:54%; width:22%; height:18%; transform:rotate(-32deg); }
+.guardian-arm::after {
+  content:""; position:absolute; left:255%; top:180%; width:88%; height:100%;
+  border-radius:60%; background:linear-gradient(140deg,#f8f0fa,#d9c8e7); transform:rotate(64deg);
+}
+.guardian-eye, .guardian-eye.welcome-wink { top:48%; }
+.guardian-cheek { top:61%; }
+.guardian-smile { top:57%; }
+body:has(#splash:not([hidden])) main:has(#welcome:not([hidden])) .brand span { animation:none; }
+@media(prefers-reduced-motion:reduce) {
+  main:has(#welcome:not([hidden])) header:not(.replay-welcome) .brand span { animation:none; }
+}
