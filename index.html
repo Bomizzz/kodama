@@ -245,7 +245,7 @@ dd { margin: 0 0 8px; }
 </section>
 <section id="psychologist" data-screen hidden>
   <h2 data-es="Vista del psicólogo" data-en="Psychologist view">Vista del psicólogo</h2>
-  <p data-es="Tus conversaciones asignadas aparecerán aquí cuando el chat profesional esté habilitado." data-en="Your assigned conversations will appear here when professional chat is enabled.">Tus conversaciones asignadas aparecerán aquí cuando el chat profesional esté habilitado.</p>
+  <div id="professional-chat"></div>
   <button type="button" id="psychologist-logout" data-es="Cerrar sesión" data-en="Sign out">Cerrar sesión</button>
 </section>
 <nav id="navigation" aria-label="Secciones de Kodama">
@@ -263,17 +263,18 @@ dd { margin: 0 0 8px; }
   </div>
 </section>
 <section id="chat" data-screen hidden><h2 data-es="Chat" data-en="Chat">Chat</h2>
-  <div class="chat-head"><span aria-hidden="true">◉</span><div><h3 data-es="Psicólogo" data-en="Psychologist">Psicólogo</h3><small data-es="Demostración · disponibilidad ilustrativa" data-en="Demo · sample availability">Demostración · disponibilidad ilustrativa</small></div></div>
-  <p><span data-es="Vista de demostración del chat. Los mensajes se quedan en esta pantalla." data-en="Chat demonstration. Messages stay on this screen.">Vista de demostración del chat. Los mensajes se quedan en esta pantalla.</span></p>
+  <div id="kodama-chat-room"><div class="chat-head"><span aria-hidden="true">◉</span><div><h3 data-es="Psicólogo" data-en="Psychologist">Psicólogo</h3><small id="chat-demo-availability" data-es="Demostración · disponibilidad ilustrativa" data-en="Demo · sample availability">Demostración · disponibilidad ilustrativa</small></div></div>
+  
+  <label id="chat-thread-label" hidden><span data-es="Conversación" data-en="Conversation">Conversación</span><select id="chat-thread"></select></label><p id="chat-connection" role="status"></p>
   <div id="messages" role="log" aria-label="Conversación"><div class="clouds" aria-hidden="true"><span class="chat-cloud"></span><span class="chat-cloud"></span><span class="chat-cloud"></span><span class="chat-cloud"></span></div></div>
   <form id="message-form">
     <label for="message"><span data-es="Mensaje" data-en="Message">Mensaje</span></label><textarea id="message" name="message" rows="2" placeholder="Escribe tu mensaje…" inputmode="text" autocomplete="off" maxlength="1000" required></textarea>
-    <div class="chat-tools"><button type="button" id="attach-file" aria-label="Adjuntar archivo">+</button><input type="file" id="chat-file" hidden>
+    <div class="chat-tools"><button type="button" id="open-stickers" aria-label="Emojis, stickers y GIF">☺</button><button type="button" id="attach-file" aria-label="Adjuntar archivo">+</button><input type="file" id="chat-file" hidden>
       <button type="button" id="dictate" aria-label="Dictar mensaje"><img src="microfono.png" alt=""></button>
       <button type="submit" aria-label="Agregar mensaje a la vista"><img src="enviar.png" alt=""></button>
     </div>
   </form>
-  <p id="chat-status" role="status"></p>
+  <p id="chat-status" role="status"></p></div>
 </section>
 <section id="progress" data-screen hidden><h2 data-es="Mi progreso" data-en="My progress">Mi progreso</h2>
 <h3 data-es="Estado de ánimo diario" data-en="Daily mood">Estado de ánimo diario</h3>
@@ -304,7 +305,24 @@ dd { margin: 0 0 8px; }
 <p id="status" role="status"></p>
 </section>
 </main>
-<link rel="stylesheet" href="./kodama-experience.css?v=guardian-pearl-4"><script src="./config.js?v=supabase-1"></script>
+<dialog id="sticker-dialog" aria-labelledby="sticker-heading">
+  <h2 id="sticker-heading">Emojis, stickers y GIF</h2>
+  <label>Buscar por emoción o frase<input id="sticker-search" type="search" placeholder="Ej. sorpresa, ánimo, lunes"></label>
+  <label>Categoría<select id="sticker-category"></select></label>
+  <div id="sticker-results"></div>
+  <p id="sticker-status" role="status"></p>
+  <details id="sticker-create"><summary>Importar o crear con una imagen propia</summary>
+    <form id="sticker-import">
+      <label>Imagen PNG, WebP o GIF (máx. 512 KB)<input name="image" type="file" accept="image/png,image/webp,image/gif" required></label>
+      <label>Nombre del sticker<input name="label" maxlength="45" required></label>
+      <label class="check"><input type="checkbox" required>Confirmo que puedo usar la imagen y que es apropiada para el chat.</label>
+      <button>Guardar en Mis stickers</button>
+    </form>
+  </details>
+  <form method="dialog"><button class="secondary">Cerrar</button></form>
+</dialog>
+<link rel="stylesheet" href="./kodama-chat.css?v=1">
+<link rel="stylesheet" href="./kodama-experience.css?v=guardian-pearl-4"><script src="./config.js?v=supabase-1"></script><script src="./kodama-chat.js?v=1"></script>
 <script>
 const config = window.KODAMA_CONFIG;
 const publicPreview = location.origin === 'https://bomizzz.github.io' && location.pathname.startsWith('/kodama/');
@@ -383,17 +401,7 @@ const message = document.querySelector('#message');
 const messages = document.querySelector('#messages');
 const greeting = messages.firstElementChild;
 const chatStatus = document.querySelector('#chat-status');
-document.querySelector('#message-form').addEventListener('submit', event => {
-  event.preventDefault();
-  const text = message.value.trim();
-  if (!text) return;
-  const entry = document.createElement('p');
-  entry.textContent = (document.documentElement.lang === 'en' ? 'You · Demo: ' : 'Tú · Demostración: ') + text;
-  greeting.hidden = true;
-  messages.append(entry);
-  messages.scrollTop = messages.scrollHeight;
-  message.value = '';
-});
+
 document.querySelector('#dictate').addEventListener('click', () => {
   const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!Recognition) {
@@ -482,6 +490,11 @@ function show(email, role) {
   create.hidden = role !== 'admin' || demo;
   document.querySelector('#role').textContent = role === 'admin' ? 'Panel de administración' : 'Tu espacio seguro';
   document.querySelector('#identity').textContent = email ?? '';
+  const room = document.querySelector('#kodama-chat-room');
+  const host = role === 'psychologist' ? document.querySelector('#professional-chat') : document.querySelector('#chat');
+  if (role === 'psychologist') host.append(room);
+  else host.insertBefore(room, host.children[1] ?? null);
+  window.kodamaChat?.setSession({ email, role, demo, client });
 }
 function submit(form, handler) {
   form.addEventListener('submit', async event => {
@@ -591,6 +604,8 @@ start().then(() => { login.querySelector('button').disabled = false; })
 </script>
 <script src="./kodama-experience.js?v=guardian-auto-1"></script>
 </html>
+
+
 
 
 

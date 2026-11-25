@@ -1,0 +1,20 @@
+#kodama-chat-room [hidden],#sticker-dialog [hidden]{display:none!important}
+#message-form .chat-tools{grid-template-columns:repeat(4,minmax(0,1fr))}
+#open-stickers{font-size:1.35rem}
+#sticker-dialog{max-width:535px}
+#sticker-dialog h2{font-size:1.5rem;letter-spacing:0}
+#sticker-results{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:8px;max-height:35dvh;overflow:auto;padding:3px}
+.sticker-card{background:#fff8;border:1px solid var(--line);border-radius:12px;text-align:center;padding:5px;min-width:0}
+.sticker-card .sticker-send{background:transparent;color:#322331;padding:2px;margin:0;border-radius:8px;width:100%;font-size:.76rem}
+.sticker-card .sticker-send:hover{background:#f5dfeb;color:#322331}
+.sticker-card .sticker-favorite,.sticker-message button{width:auto;min-height:38px;padding:3px 11px;font-size:.78rem}
+.sticker-visual{display:grid;place-items:center;width:68px;height:60px;position:relative;margin:auto;font-size:2rem;line-height:1}
+.sticker-visual img{max-width:100%;max-height:100%;object-fit:contain}
+.sticker-visual .guardian-art{width:58px;height:58px;font-size:8px}
+.sticker-visual .chat-cloud{width:48px}
+.sticker-visual.sticker-animated{animation:sticker-bob 1.6s ease-in-out infinite}
+@keyframes sticker-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px) rotate(-6deg)}}
+@media(prefers-reduced-motion:reduce){.sticker-visual.sticker-animated{animation:none}}
+.sticker-message{margin:10px 0;padding:8px 12px;background:#fff8;border-radius:12px;width:fit-content;max-width:100%;overflow-wrap:anywhere}
+.sticker-message.mine{margin-left:auto;background:#f8e9f3}
+.sticker-message small{display:block;font-size:.75rem}
