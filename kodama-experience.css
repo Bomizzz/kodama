@@ -600,3 +600,43 @@ main:has(#welcome:not([hidden])) .welcome-wink {
   top:51%; left:45%; width:10%; height:14%; border:0; border-radius:18% 18% 57% 57%;
   background:radial-gradient(ellipse at 57% 104%,#ee8b9d 0 40%,transparent 43%),#72474a;
 }
+
+/* The body, side flares and lower folds form one continuous silhouette. */
+.guardian-body {
+  inset:0; border-radius:47% 47% 34% 34% / 54% 54% 37% 37%;
+  background:
+    radial-gradient(ellipse at 50% 102%,#c7aca2a3,transparent 42%),
+    radial-gradient(ellipse at 31% 21%,#fff 3%,#faf9f4 45%,#eee5df 72%,#d8c8c0 100%);
+}
+@supports (clip-path:shape(from 0% 0%,line to 100% 0%,close)) {
+  .guardian-body {
+    border-radius:0;
+    clip-path:shape(from 50% 0%,
+      curve to 87% 44% with 72% -1% / 83% 15%,
+      curve to 98% 59% with 89% 51% / 96% 54%,
+      curve to 90% 69% with 102% 65% / 95% 67%,
+      curve to 75% 91% with 86% 77% / 86% 91%,
+      curve to 65% 88% with 70% 94% / 67% 85%,
+      curve to 50% 100% with 62% 93% / 59% 100%,
+      curve to 35% 88% with 42% 100% / 38% 93%,
+      curve to 24% 92% with 33% 85% / 29% 94%,
+      curve to 10% 69% with 14% 91% / 13% 77%,
+      curve to 2% 59% with 5% 67% / -2% 65%,
+      curve to 13% 44% with 4% 54% / 11% 51%,
+      curve to 50% 0% with 17% 15% / 28% -1%,close);
+  }
+}
+.guardian-arm,.guardian-hem { display:none; }
+.welcome-ghost .guardian-eye,#ghost .guardian-eye { width:9%; height:8%; top:31%; }
+.welcome-ghost .guardian-eye-left,#ghost .guardian-eye-left { left:30%; }
+.welcome-ghost .guardian-eye-right,#ghost .guardian-eye-right { left:61%; }
+.welcome-ghost .guardian-eye::before,#ghost .guardian-eye::before { content:none; }
+.welcome-ghost .guardian-cheek,#ghost .guardian-cheek { top:38%; width:16%; height:9%; }
+.welcome-ghost .guardian-cheek-left,#ghost .guardian-cheek-left { left:22%; }
+.welcome-ghost .guardian-cheek-right,#ghost .guardian-cheek-right { left:63%; }
+.welcome-ghost .guardian-smile,#ghost .guardian-smile {
+  top:39%; left:46%; width:10%; height:11%;
+  border-radius:14% 14% 48% 48% / 17% 17% 69% 69%;
+  background:radial-gradient(ellipse at 50% 93%,#f58291 0 43%,transparent 47%),#6b313b;
+}
+
