@@ -171,6 +171,9 @@ dd { margin: 0 0 8px; }
 #notice-list{list-style:none;margin:0;padding:0;max-height:280px;overflow:auto}
 #notice-list li{display:grid;gap:3px;padding:8px 0;border-top:1px solid var(--line);overflow-wrap:anywhere}
 #notice-list time,#notice-status{color:var(--muted);font-size:.87rem}
+#examples > div { margin:8px 0; }
+#examples > div span { display:block; font-size:.8rem; }
+#examples .demo-email { display:block; width:100%; text-align:left; padding:5px 10px; margin:2px 0; min-height:40px; font-size:.87rem; overflow-wrap:anywhere; }
 </style>
 <div class="utilities"><button type="button" id="language" lang="en">English</button><button type="button" data-dialog="crisis" data-es="Ayuda en crisis" data-en="Crisis help">Ayuda en crisis</button></div>
 
@@ -214,7 +217,13 @@ dd { margin: 0 0 8px; }
 <label><span data-es="Usuario (correo electrónico)" data-en="User (email)">Usuario (correo electrónico)</span><input name="email" type="email" required autocomplete="username"></label>
 <label><span data-es="Contraseña" data-en="Password">Contraseña</span><input name="password" type="password" required autocomplete="current-password"></label>
 <button><span data-es="Entrar" data-en="Sign in">Entrar</span></button><button class="secondary" type="button" data-access="welcome"><span data-es="Volver" data-en="Back">Volver</span></button>
-<small id="examples" hidden><span data-es="Cuentas de prueba" data-en="Demo accounts">Cuentas de prueba</span><br><strong>usuario</strong> · <strong>administrador</strong><br><span data-es="Contraseña" data-en="Password">Contraseña</span>: <strong>1234</strong></small>
+<div id="examples" hidden>
+  <strong data-es="Cuentas de prueba" data-en="Demo accounts">Cuentas de prueba</strong>
+  <div><span data-es="Paciente" data-en="Patient">Paciente</span><button class="secondary demo-email" type="button" data-demo-email="usuario@kodama.test">usuario@kodama.test</button></div>
+  <div><span data-es="Psicólogo" data-en="Psychologist">Psicólogo</span><button class="secondary demo-email" type="button" data-demo-email="psicologo@kodama.test">psicologo@kodama.test</button></div>
+  <div><span data-es="Administradora" data-en="Administrator">Administradora</span><button class="secondary demo-email" type="button" data-demo-email="admin@kodama.test">admin@kodama.test</button></div>
+  <small><span data-es="Contraseña de prueba" data-en="Demo password">Contraseña de prueba</span> <strong>1234</strong></small>
+</div>
 </form>
 <section id="panel" hidden>
 <h2 id="role"></h2>
@@ -233,6 +242,11 @@ dd { margin: 0 0 8px; }
 <label>Contraseña inicial<input name="password" type="password" required minlength="12" maxlength="72" autocomplete="new-password"></label>
 <button>Crear usuario</button>
 </form>
+</section>
+<section id="psychologist" data-screen hidden>
+  <h2 data-es="Vista del psicólogo" data-en="Psychologist view">Vista del psicólogo</h2>
+  <p data-es="Demostración. Aquí podrás consultar tus conversaciones asignadas cuando el chat profesional esté habilitado." data-en="Demo. Your assigned conversations will appear here when professional chat is enabled.">Demostración. Aquí podrás consultar tus conversaciones asignadas cuando el chat profesional esté habilitado.</p>
+  <button type="button" id="psychologist-logout" data-es="Cerrar sesión" data-en="Sign out">Cerrar sesión</button>
 </section>
 <nav id="navigation" aria-label="Secciones de Kodama">
   <button type="button" data-view="home"><span data-es="Inicio" data-en="Home">Inicio</span></button>
@@ -304,6 +318,7 @@ const create = document.querySelector('#create');
 const status = document.querySelector('#status');
 const examples = {
   'admin@kodama.test': 'admin',
+  'psicologo@kodama.test': 'psychologist',
   'usuario@kodama.test': 'user'
 };
 let client;
@@ -456,7 +471,8 @@ function show(email, role) {
   document.querySelector('#access-mode').hidden = Boolean(role);
   showAccess(role ? null : 'welcome');
   document.querySelector('#admin-open').hidden = role !== 'admin';
-  showView(role === 'admin' ? 'admin' : 'home');
+  document.querySelector('#navigation').hidden = role === 'psychologist';
+  showView(role === 'admin' ? 'admin' : role === 'psychologist' ? 'psychologist' : 'home');
   greeting.hidden = false;
   messages.replaceChildren(greeting);
   message.value = '';
@@ -491,6 +507,9 @@ async function showSession(session) {
     if (noticeError) status.textContent = 'La sesión está activa. No se pudo registrar este acceso.';
   }
 }
+document.querySelector('#psychologist-logout').addEventListener('click', () => {
+  document.querySelector('#logout').requestSubmit();
+});
 window.kodamaOpenView = showView;
 async function start() {
   if (realAccess) {
@@ -505,6 +524,12 @@ async function start() {
     document.querySelector('#mode').textContent = publicPreview ? 'Vista previa · cuentas de prueba' : 'Demostración local';
     document.querySelector('#mode').hidden = false;
     document.querySelector('#examples').hidden = false;
+    for (const shortcut of document.querySelectorAll('[data-demo-email]')) {
+      shortcut.addEventListener('click', () => {
+        login.elements.email.value = shortcut.dataset.demoEmail;
+        login.elements.password.focus();
+      });
+    }
     const identifier = login.elements.email;
     identifier.type = 'text';
     identifier.inputMode = 'text';
@@ -566,6 +591,7 @@ start().then(() => { login.querySelector('button').disabled = false; })
 </script>
 <script src="./kodama-experience.js?v=guardian-auto-1"></script>
 </html>
+
 
 
 
