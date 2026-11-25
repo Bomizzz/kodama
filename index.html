@@ -254,7 +254,7 @@ dd { margin: 0 0 8px; }
 <section id="chat" data-screen hidden><h2 data-es="Chat" data-en="Chat">Chat</h2>
   <div class="chat-head"><span aria-hidden="true">◉</span><div><h3 data-es="Psicólogo" data-en="Psychologist">Psicólogo</h3><small data-es="Demostración · disponibilidad ilustrativa" data-en="Demo · sample availability">Demostración · disponibilidad ilustrativa</small></div></div>
   <p><span data-es="Vista de demostración del chat. Los mensajes se quedan en esta pantalla." data-en="Chat demonstration. Messages stay on this screen.">Vista de demostración del chat. Los mensajes se quedan en esta pantalla.</span></p>
-  <div id="messages" role="log" aria-label="Conversación"><div class="clouds" aria-hidden="true"><span>☁</span><span>☁</span><span>☁</span><span>☁</span></div></div>
+  <div id="messages" role="log" aria-label="Conversación"><div class="clouds" aria-hidden="true"><span class="chat-cloud"></span><span class="chat-cloud"></span><span class="chat-cloud"></span><span class="chat-cloud"></span></div></div>
   <form id="message-form">
     <label for="message"><span data-es="Mensaje" data-en="Message">Mensaje</span></label><textarea id="message" name="message" rows="2" placeholder="Escribe tu mensaje…" inputmode="text" autocomplete="off" maxlength="1000" required></textarea>
     <div class="chat-tools"><button type="button" id="attach-file" aria-label="Adjuntar archivo">+</button><input type="file" id="chat-file" hidden>
@@ -293,7 +293,7 @@ dd { margin: 0 0 8px; }
 <p id="status" role="status"></p>
 </section>
 </main>
-<link rel="stylesheet" href="./kodama-experience.css?v=guardian-3d"><script src="./config.js?v=supabase-1"></script>
+<link rel="stylesheet" href="./kodama-experience.css?v=guardian-soft-1"><script src="./config.js?v=supabase-1"></script>
 <script>
 const config = window.KODAMA_CONFIG;
 const publicPreview = location.origin === 'https://bomizzz.github.io' && location.pathname.startsWith('/kodama/');
@@ -569,6 +569,7 @@ start().then(() => { login.querySelector('button').disabled = false; })
 </script>
 <script src="./kodama-experience.js?v=guardian-3d"></script>
 </html>
+
 
 
 

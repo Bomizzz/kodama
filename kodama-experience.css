@@ -42,8 +42,8 @@ button.secondary:hover:enabled,#navigation button:hover,.chat-tools button:hover
 @keyframes wave-ghost{to{transform:rotate(-11deg) translateY(-6px)}}
 #chat{padding:15px;border-radius:20px}.chat-head{display:flex;align-items:center;gap:12px}.chat-head h3{margin:0}
 #message{background:#111;color:#fff;border-radius:999px}#message::placeholder{color:#ddd}
-.clouds{display:flex;justify-content:space-around;color:#e872a0;padding:30px 0;font-size:2.6rem;animation:clouds 75s linear infinite alternate}
-.clouds span:nth-child(even){transform:translateY(18px)}@keyframes clouds{from{transform:translateX(-8%)}to{transform:translateX(8%)}}
+.clouds{display:flex;justify-content:space-around;color:#e872a0;padding:30px 0;min-height:122px}
+.clouds span:nth-child(even){transform:translateY(18px)}
 #messages{overflow-x:hidden}
 .chat-tools button img{filter:grayscale(1) brightness(0) invert(1)}
 select,textarea{display:block;width:100%;font:inherit;border:1px solid #a79ca5;border-radius:12px;padding:10px;background:#fff;color:#111}
@@ -355,3 +355,91 @@ main:has(#welcome:not([hidden])) .welcome-wink {
 .mood-guardian-3 .guardian-cheek { transform:scale(1.25); }
 .mood-guardian-4 .guardian-smile { border-width:.12em; border-radius:50%; }
 .mood-guardian-5 .guardian-smile { transform:rotate(180deg); }
+
+/* Soft sculpted shading follows the original Kodama silhouette. */
+.guardian-body {
+  background:
+    radial-gradient(ellipse at 48% 86%,#dfc6eb66,transparent 49%),
+    radial-gradient(ellipse at 30% 20%,#fff 0%,#fefcf9 30%,#f4eaf5 66%,#d6c4e3 92%);
+  box-shadow:inset -.48em -.38em .9em #a88cbf42,inset .28em .22em .63em #fff;
+}
+.guardian-body::after {
+  inset:12% auto auto 17%; width:43%; height:17%;
+  background:radial-gradient(ellipse,#fffdfbdc, #ffffff40 52%, transparent 74%);
+}
+.guardian-arm {
+  background:radial-gradient(ellipse at 30% 22%,#fffdfa,#f4ebf5 52%,#d6c8e5);
+}
+.guardian-apple {
+  background:radial-gradient(ellipse at 30% 25%,#ffe0d3 0%,#fa9299 15%,#dd485d 48%,#a62646 93%);
+}
+.guardian { transform-origin:50% 76%; }
+@media (prefers-reduced-motion:no-preference) {
+  #ghost .guardian { animation:guardian-breathe 3.8s ease-in-out infinite; }
+  #ghost[data-action=still] .guardian { animation:none; }
+  #ghost[data-action=jump] .guardian { animation:guardian-spring .62s ease-in-out both; }
+  #ghost:not([data-action=still]):not([data-action=sleep]) .guardian-eye {
+    animation:guardian-blink 5.8s ease-in-out infinite;
+  }
+  #ghost[data-action=idle] .mascot { animation:guardian-hover 4.1s ease-in-out infinite; }
+  main:has(#welcome:not([hidden])) .welcome-ghost {
+    animation:guardian-arrival 1.85s linear both,guardian-hover 4.6s 1.95s ease-in-out infinite;
+  }
+  main:has(#welcome:not([hidden])) .welcome-ghost .guardian { animation:guardian-breathe 4.6s 1.95s ease-in-out infinite; }
+  main:has(#welcome:not([hidden])) .welcome-wink { animation:welcome-wink .33s 1.85s ease-in-out both; }
+}
+@keyframes guardian-hover {
+  0%,100% { transform:translateY(0) rotate(0); }
+  24% { transform:translateY(-5%) rotate(-3deg); }
+  55% { transform:translateY(-7%) rotate(1.8deg); }
+  78% { transform:translateY(-3%) rotate(2deg); }
+}
+@keyframes guardian-breathe {
+  0%,100% { transform:scale(1); }
+  35% { transform:scale(.974,1.033); }
+  73% { transform:scale(1.035,.978); }
+}
+@keyframes guardian-spring {
+  0%,100% { transform:scale(1); }
+  19% { transform:scale(1.12,.89); }
+  51% { transform:scale(.91,1.13); }
+  83% { transform:scale(1.07,.94); }
+}
+@keyframes guardian-blink {
+  0%,87%,94%,100% { scale:1 1; }
+  90%,91% { scale:1 .12; }
+}
+@keyframes guardian-arrival {
+  0% { opacity:0; transform:translate(23%,5%) rotate(7deg) scale(.96,1.02); animation-timing-function:ease-out; }
+  34% { opacity:1; transform:translate(12%,-7%) rotate(2deg) scale(.96,1.035); animation-timing-function:ease-in-out; }
+  67% { transform:translate(2%,2%) rotate(-2deg) scale(1.04,.97); animation-timing-function:ease-out; }
+  86% { transform:translate(-1%,-2%) rotate(1deg) scale(.99,1.015); animation-timing-function:ease-in-out; }
+  100% { opacity:1; transform:translate(0,0) rotate(0) scale(1); }
+}
+
+/* Fixed decorative clouds retain their four alternating positions. */
+.clouds { align-items:center; pointer-events:none; animation:none; }
+.chat-cloud {
+  position:relative; display:block; width:clamp(30px,12%,65px); height:28px;
+  border-radius:48% 46% 42% 39%;
+  background:radial-gradient(ellipse at 30% 20%,#ffeff3,#f8c4d7 55%,#e6a1be);
+  box-shadow:inset 0 -.18em .45em #bc769746,0 4px 8px #a85c7f22;
+}
+.chat-cloud::before,.chat-cloud::after {
+  content:""; position:absolute; border-radius:50%; bottom:28%;
+  background:radial-gradient(ellipse at 35% 18%,#fff1f6,#fad2e0 59%,#efb1cc);
+}
+.chat-cloud::before { width:52%; height:99%; left:13%; }
+.chat-cloud::after { width:44%; height:77%; right:12%; }
+
+@media (prefers-reduced-motion:no-preference) {
+  main:has(#welcome:not([hidden])) .welcome-ghost .guardian-eye-left {
+    animation:guardian-blink 6.6s 2.7s ease-in-out infinite;
+  }
+  main:has(#welcome:not([hidden])) .welcome-ghost .guardian-eye-right {
+    animation:welcome-wink .33s 1.85s ease-in-out both,guardian-blink 6.6s 2.7s ease-in-out infinite;
+  }
+  #mood-options label:has(input:checked) .guardian {
+    animation:guardian-spring .62s ease-in-out both;
+  }
+}
