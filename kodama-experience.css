@@ -1,4 +1,4 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Chewy&family=Gaegu:wght@700&family=Nunito:wght@600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Chewy&family=Gaegu:wght@700&family=Nunito:wght@600;700;800;900&display=swap');
 :root{--ink:#111;--paper:#fff;--wash:#f4f1ea;--line:#e2dce6;--plum:#111;--deep-plum:#28232a;--serif:Gaegu,system-ui,sans-serif}
 body{background:#f4f1ea;padding-top:84px}
 main{border-radius:27px}
@@ -173,19 +173,6 @@ body:has(#splash:not([hidden])) main .brand span { animation-name:none; }
   main:has(#welcome:not([hidden])) .welcome-wink { animation:none; }
 }
 
-#replay-welcome { width:auto; padding:6px 14px; margin:0 0 12px; }
-main:has(#welcome:not([hidden])) .replay-welcome .welcome-ghost {
-  animation:welcome-flight 1.35s cubic-bezier(.22,.8,.24,1) both;
-}
-main:has(#welcome:not([hidden])) .replay-welcome .welcome-wink {
-  animation:welcome-wink .48s 1.4s both;
-}
-main:has(#welcome:not([hidden])) .replay-welcome .brand span { animation:wordmark-wave 1.5s 2; }
-main .replay-welcome .brand span:nth-child(2) { animation-delay:.09s; }
-main .replay-welcome .brand span:nth-child(3) { animation-delay:.18s; }
-main .replay-welcome .brand span:nth-child(4) { animation-delay:.27s; }
-main .replay-welcome .brand span:nth-child(5) { animation-delay:.36s; }
-main .replay-welcome .brand span:nth-child(6) { animation-delay:.45s; }
 
 /* Original Kodama guardian. The eyes are independent so the wink is a facial movement. */
 .artwork:has(.guardian) {
@@ -229,16 +216,11 @@ main .replay-welcome .brand span:nth-child(6) { animation-delay:.45s; }
 .guardian-smile { position:absolute; top:60%; left:44%; width:11%; height:9%; border:solid #57405e; border-width:0 0 .11em; border-radius:0 0 60% 60%; transform:rotate(-5deg); }
 .guardian-shadow { position:absolute; left:21%; right:13%; bottom:6%; height:13%; background:radial-gradient(ellipse,#88699f4c,transparent 69%); }
 main:has(#welcome:not([hidden])) .brand span { animation:wordmark-wave 1.85s cubic-bezier(.23,.75,.32,1) both; }
-main:has(#welcome:not([hidden])) .replay-welcome .brand span { animation:wordmark-wave 1.85s cubic-bezier(.23,.75,.32,1) both; }
 main .brand span:nth-child(2) { animation-delay:.07s; }
 main .brand span:nth-child(3) { animation-delay:.14s; }
 main .brand span:nth-child(4) { animation-delay:.21s; }
 main .brand span:nth-child(5) { animation-delay:.28s; }
 main .brand span:nth-child(6) { animation-delay:.35s; }
-main:has(#welcome:not([hidden])) .welcome-ghost,
-main:has(#welcome:not([hidden])) .replay-welcome .welcome-ghost { animation:welcome-flight 1.85s cubic-bezier(.18,.73,.24,1) both; }
-main:has(#welcome:not([hidden])) .welcome-wink,
-main:has(#welcome:not([hidden])) .replay-welcome .welcome-wink { animation:welcome-wink .32s 1.82s ease-in-out both; }
 @keyframes wordmark-wave {
   0% { opacity:0; transform:translate(-.16em,.28em) rotate(-9deg); }
   58% { opacity:1; transform:translate(.025em,-.075em) rotate(3deg); }
@@ -258,14 +240,11 @@ main:has(#welcome:not([hidden])) .replay-welcome .welcome-wink { animation:welco
 }
 body:has(#splash:not([hidden])) main:has(#welcome:not([hidden])) :is(.brand span,.welcome-ghost,.welcome-wink) { animation:none; }
 @media(prefers-reduced-motion:reduce) {
-  main:has(#welcome:not([hidden])) header:not(.replay-welcome) :is(.brand span,.welcome-ghost,.welcome-wink) { animation:none; }
+  main:has(#welcome:not([hidden])) header :is(.brand span,.welcome-ghost,.welcome-wink) { animation:none; }
 }
 
 /* Move one letter at a time and give the guardian a scalloped ghost silhouette. */
-main:has(#welcome:not([hidden])) .brand span,
-main:has(#welcome:not([hidden])) .replay-welcome .brand span {
-  animation:wordmark-wave .46s cubic-bezier(.23,.75,.32,1) var(--letter-start,0s) both;
-}
+main:has(#welcome:not([hidden])) .brand span { animation:wordmark-wave .46s cubic-bezier(.23,.75,.32,1) var(--letter-start,0s) both; }
 main .brand span:nth-child(2) { --letter-start:.46s; }
 main .brand span:nth-child(3) { --letter-start:.92s; }
 main .brand span:nth-child(4) { --letter-start:1.38s; }
@@ -288,5 +267,26 @@ main .brand span:nth-child(6) { --letter-start:2.30s; }
 .guardian-smile { top:57%; }
 body:has(#splash:not([hidden])) main:has(#welcome:not([hidden])) .brand span { animation:none; }
 @media(prefers-reduced-motion:reduce) {
-  main:has(#welcome:not([hidden])) header:not(.replay-welcome) .brand span { animation:none; }
+  main:has(#welcome:not([hidden])) header .brand span { animation:none; }
 }
+
+main:has(#welcome:not([hidden])) .welcome-ghost {
+  animation:welcome-flight 1.65s cubic-bezier(.21,.66,.29,1) both;
+}
+main:has(#welcome:not([hidden])) .welcome-wink {
+  animation:welcome-wink .32s 1.62s ease-in-out both;
+}
+@keyframes welcome-flight {
+  0% { opacity:0; transform:translate(22%,6%) rotate(5deg); }
+  40% { opacity:1; }
+  74% { transform:translate(1%,-2%) rotate(-1deg); }
+  100% { opacity:1; transform:translate(0,0) rotate(0); }
+}
+@media(prefers-reduced-motion:reduce) {
+  main:has(#welcome:not([hidden])) header .welcome-ghost { animation:welcome-fade .5s ease-out both; }
+  main:has(#welcome:not([hidden])) header .welcome-wink { animation:welcome-wink .3s .6s ease-in-out both; }
+}
+@keyframes welcome-fade { from { opacity:0; } to { opacity:1; } }
+
+
+

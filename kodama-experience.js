@@ -1,4 +1,4 @@
-﻿(() => {
+(() => {
   'use strict';
   const $ = id => document.getElementById(id);
   const root = document.documentElement;
@@ -138,17 +138,6 @@
     if(event.target.files.length)$('chat-status').textContent=t('Archivo seleccionado para la demo. No se enviará.','File selected for this demo. It will not be sent.');
     event.target.value='';
   };
-  const intro=$('splash');
-  let introSeen = false;
-  try { introSeen = sessionStorage.getItem('kodama.intro') === '1'; } catch {}
-  if(!introSeen&&!reduce.matches){
-    intro.hidden=false; document.querySelector('main').inert=true;document.querySelector('.utilities').inert=true;
-    $('skip-intro').focus();
-    const finish=()=>{intro.hidden=true;document.querySelector('main').inert=false;document.querySelector('.utilities').inert=false;try { sessionStorage.setItem('kodama.intro','1'); } catch {}document.querySelector('[data-access=login]')?.focus();};
-    const timer=setTimeout(finish,4000);
-    $('skip-intro').onclick=()=>{clearTimeout(timer);finish();};
-    intro.onkeydown=event=>{if(event.key==='Escape')$('skip-intro').click();};
-  }
   const stage=document.querySelector('.mascot-stage'), sprite=stage.querySelector('img');
   const ghost=document.createElement('button');ghost.id='ghost';ghost.type='button';ghost.setAttribute('aria-label','Fantasma de Kodama');
   const wrapper=document.createElement('span');wrapper.className='ghost-sprite';wrapper.append(sprite);ghost.append(wrapper);stage.append(ghost);
@@ -205,6 +194,7 @@
   document.addEventListener('pointerdown',()=>{if(ghost.dataset.action==='sleep'){lastAction=Date.now();cycle();}else lastAction=Date.now();});
   setLanguage(load('kodama.language','es')==='en'?'en':'es');cycle();refreshGhostControl();
 })();
+
 
 
 
