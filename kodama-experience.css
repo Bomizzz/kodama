@@ -557,3 +557,46 @@ main:has(#welcome:not([hidden])) .welcome-wink {
 }
 
 
+
+/* A rounded, pearl-white ghost with a soft, continuous lower edge. */
+.guardian { inset:1% 10% 10%; }
+.guardian-body {
+  inset:3% 9% 13%; clip-path:none;
+  border-radius:49% 49% 42% 42% / 58% 58% 31% 31%;
+  background:radial-gradient(ellipse at 37% 15%,#fff 1%,#fcfaf5 35%,#eee7e1 70%,#d4c4bf 99%);
+  box-shadow:inset -.32em -.24em .7em #aa909329,inset .28em .2em .55em #fff9;
+}
+.guardian-body::after { opacity:.66; }
+.guardian-hem { left:12%; right:12%; bottom:0; height:31%; }
+.guardian-hem i {
+  border-radius:35% 35% 58% 58% / 32% 32% 69% 69%;
+  background:radial-gradient(ellipse at 53% 16%,#f6f1e9,#e8ded8 63%,#d1bfba);
+  box-shadow:inset 0 -.1em .25em #b4938c28;
+}
+.guardian-hem i:nth-child(2) { height:108%; }
+.guardian-arm {
+  top:52%; width:25%; height:19%; box-shadow:none;
+  background:radial-gradient(ellipse at 55% 24%,#fffdf9,#f1eae4 53%,#d9cbc3);
+}
+.guardian-arm-left,.mood-guardian .guardian-arm-left { left:1%; rotate:-26deg; }
+.guardian-arm-right,.mood-guardian .guardian-arm-right { right:1%; rotate:26deg; }
+.guardian-eye,.guardian-eye.welcome-wink,.guardian-cheek,.guardian-smile { z-index:3; }
+.guardian-eye,.guardian-eye.welcome-wink { top:38%; }
+.guardian-cheek { top:52%; }
+.guardian-cheek-left { left:18%; }
+.guardian-cheek-right { left:64%; }
+.welcome-ghost .guardian-eye,#ghost .guardian-eye {
+  width:10%; height:13%;
+  background:radial-gradient(circle at 33% 26%,#fff 0 13%,transparent 16%),
+    radial-gradient(ellipse at 63% 81%,#a67a70,#59413f 78%);
+}
+.welcome-ghost .guardian-eye::before,#ghost .guardian-eye::before {
+  content:""; position:absolute; top:-42%; left:5%; width:90%; height:17%;
+  background:#8a6761; border-radius:999px;
+}
+.welcome-ghost .guardian-eye-left::before,#ghost .guardian-eye-left::before { transform:rotate(-19deg); }
+.welcome-ghost .guardian-eye-right::before,#ghost .guardian-eye-right::before { transform:rotate(19deg); }
+.welcome-ghost .guardian-smile,#ghost .guardian-smile {
+  top:51%; left:45%; width:10%; height:14%; border:0; border-radius:18% 18% 57% 57%;
+  background:radial-gradient(ellipse at 57% 104%,#ee8b9d 0 40%,transparent 43%),#72474a;
+}
