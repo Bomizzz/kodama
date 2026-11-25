@@ -181,13 +181,13 @@ dd { margin: 0 0 8px; }
 <template id="guardian-art"><div class="guardian-art"><div class="guardian-shadow"></div>
   <div class="guardian">
     
-    <span class="guardian-body"></span><span class="guardian-hem"><i></i><i></i><i></i></span><span class="guardian-arm guardian-arm-left"></span><span class="guardian-arm guardian-arm-right"></span>
+    <span class="guardian-body"></span><span class="guardian-leaf"></span><span class="guardian-hem"><i></i><i></i><i></i></span><span class="guardian-arm guardian-arm-left"></span><span class="guardian-arm guardian-arm-right"></span>
     <span class="guardian-cheek guardian-cheek-left"></span><span class="guardian-cheek guardian-cheek-right"></span>
     <span class="guardian-eye guardian-eye-left"></span><span class="guardian-eye guardian-eye-right welcome-wink"></span>
     <span class="guardian-smile"></span>
   </div></div></template>
 <main>
-<header><div class="brand-lockup"><h1 class="brand" aria-label="Kodama"><span aria-hidden="true">K</span><span aria-hidden="true">O</span><span aria-hidden="true">D</span><span aria-hidden="true">A</span><span aria-hidden="true">M</span><span aria-hidden="true">A</span></h1><p id="mode" hidden>Demostración local</p></div><div class="artwork"><div class="welcome-ghost" role="img" aria-label="Fantasma de Kodama: un pequeño guardián blanco con mejillas rosadas">
+<header><div class="brand-lockup"><h1 class="brand" aria-label="Kodama"><span aria-hidden="true">K</span><span aria-hidden="true">O</span><span aria-hidden="true">D</span><span aria-hidden="true">A</span><span aria-hidden="true">M</span><span aria-hidden="true">A</span></h1><p id="mode" hidden>Demostración local</p></div><div class="artwork"><div class="welcome-ghost" role="img" aria-label="Fantasma de Kodama: un pequeño guardián blanco con mejillas rosadas y una hoja verde">
   <div class="guardian-art-slot"></div>
 </div></div></header>
 <section class="content">
@@ -245,7 +245,7 @@ dd { margin: 0 0 8px; }
 </section>
 <section id="psychologist" data-screen hidden>
   <h2 data-es="Vista del psicólogo" data-en="Psychologist view">Vista del psicólogo</h2>
-  <p data-es="Demostración. Aquí podrás consultar tus conversaciones asignadas cuando el chat profesional esté habilitado." data-en="Demo. Your assigned conversations will appear here when professional chat is enabled.">Demostración. Aquí podrás consultar tus conversaciones asignadas cuando el chat profesional esté habilitado.</p>
+  <p data-es="Tus conversaciones asignadas aparecerán aquí cuando el chat profesional esté habilitado." data-en="Your assigned conversations will appear here when professional chat is enabled.">Tus conversaciones asignadas aparecerán aquí cuando el chat profesional esté habilitado.</p>
   <button type="button" id="psychologist-logout" data-es="Cerrar sesión" data-en="Sign out">Cerrar sesión</button>
 </section>
 <nav id="navigation" aria-label="Secciones de Kodama">
@@ -304,7 +304,7 @@ dd { margin: 0 0 8px; }
 <p id="status" role="status"></p>
 </section>
 </main>
-<link rel="stylesheet" href="./kodama-experience.css?v=guardian-pearl-3"><script src="./config.js?v=supabase-1"></script>
+<link rel="stylesheet" href="./kodama-experience.css?v=guardian-pearl-4"><script src="./config.js?v=supabase-1"></script>
 <script>
 const config = window.KODAMA_CONFIG;
 const publicPreview = location.origin === 'https://bomizzz.github.io' && location.pathname.startsWith('/kodama/');
@@ -497,7 +497,7 @@ function submit(form, handler) {
 async function showSession(session) {
   if (!session) return show();
   const { data, error } = await client.from('kodama_profiles').select('role').eq('id', session.user.id).single();
-  if (error || !['admin', 'user'].includes(data?.role)) {
+  if (error || !['admin', 'user', 'psychologist'].includes(data?.role)) {
     await client.auth.signOut({ scope: 'local' });
     throw new Error('Esta cuenta no tiene acceso a Kodama.');
   }
@@ -591,6 +591,7 @@ start().then(() => { login.querySelector('button').disabled = false; })
 </script>
 <script src="./kodama-experience.js?v=guardian-auto-1"></script>
 </html>
+
 
 
 

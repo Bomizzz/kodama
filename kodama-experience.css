@@ -649,3 +649,22 @@ main:has(#welcome:not([hidden])) .welcome-wink {
 }
 .welcome-ghost .guardian-eye-left::before,#ghost .guardian-eye-left::before { transform:rotate(-8deg); }
 .welcome-ghost .guardian-eye-right::before,#ghost .guardian-eye-right::before { transform:rotate(8deg); }
+
+.guardian-leaf {
+  top:-1%; left:43%; width:25%; height:18%;
+  background:radial-gradient(ellipse at 38% 28%,#f1ffdc,#b6d89e 38%,#78aa82 75%,#4b856d);
+  box-shadow:inset -.1em -.18em .33em #37664a5c,0 .18em .26em #8c746636;
+  transform:rotate(-25deg);
+}
+.guardian-body {
+  background:
+    radial-gradient(ellipse at 31% 6%,#fff 0%,#fff8 26%,transparent 48%),
+    radial-gradient(ellipse at 48% 97%,#c3a297a1,transparent 52%),
+    radial-gradient(ellipse at 38% 24%,#fffcf6 16%,#f4eee9 56%,#d6c3bc 90%);
+  box-shadow:inset -.4em -.29em .68em #987c752a,inset .26em .24em .56em #fff9;
+}
+.guardian-body::after {
+  inset:8% auto auto 21%; width:39%; height:16%;
+  background:radial-gradient(ellipse,#fff 0%,#fff8 50%,transparent 72%);
+}
+.guardian-shadow { height:16%; background:radial-gradient(ellipse,#85717b69,transparent 72%); }
