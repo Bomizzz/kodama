@@ -179,11 +179,11 @@ dd { margin: 0 0 8px; }
 
 <dialog id="feature-dialog"><div id="feature-body"></div><button type="button" id="feature-close" data-es="Cerrar" data-en="Close">Cerrar</button></dialog>
 <main>
-<header><div class="brand-lockup"><h1 class="brand" aria-label="Kodama"><span aria-hidden="true">K</span><span aria-hidden="true">O</span><span aria-hidden="true">D</span><span aria-hidden="true">A</span><span aria-hidden="true">M</span><span aria-hidden="true">A</span></h1><p id="mode" hidden>Demostración local</p></div><div class="artwork"><div class="welcome-ghost" role="img" aria-label="Fantasma de Kodama: un pequeño guardián blanco con una hoja de menta">
+<header><div class="brand-lockup"><h1 class="brand" aria-label="Kodama"><span aria-hidden="true">K</span><span aria-hidden="true">O</span><span aria-hidden="true">D</span><span aria-hidden="true">A</span><span aria-hidden="true">M</span><span aria-hidden="true">A</span></h1><p id="mode" hidden>Demostración local</p></div><div class="artwork"><div class="welcome-ghost" role="img" aria-label="Fantasma de Kodama: un pequeño guardián blanco con una hoja de menta y una manzana roja">
   <div class="guardian-shadow"></div>
   <div class="guardian">
     <span class="guardian-leaf"></span><span class="guardian-tail"></span>
-    <span class="guardian-body"></span><span class="guardian-arm"></span>
+    <span class="guardian-body"></span><span class="guardian-apple"></span><span class="guardian-arm guardian-arm-left"></span><span class="guardian-arm guardian-arm-right"></span>
     <span class="guardian-cheek guardian-cheek-left"></span><span class="guardian-cheek guardian-cheek-right"></span>
     <span class="guardian-eye guardian-eye-left"></span><span class="guardian-eye guardian-eye-right welcome-wink"></span>
     <span class="guardian-smile"></span>
@@ -292,7 +292,7 @@ dd { margin: 0 0 8px; }
 <p id="status" role="status"></p>
 </section>
 </main>
-<link rel="stylesheet" href="./kodama-experience.css?v=welcome-6"><script src="./config.js?v=supabase-1"></script>
+<link rel="stylesheet" href="./kodama-experience.css?v=welcome-7"><script src="./config.js?v=supabase-1"></script>
 <script>
 const config = window.KODAMA_CONFIG;
 const publicPreview = location.origin === 'https://bomizzz.github.io' && location.pathname.startsWith('/kodama/');
@@ -568,6 +568,7 @@ start().then(() => { login.querySelector('button').disabled = false; })
 </script>
 <script src="./kodama-experience.js?v=welcome-6"></script>
 </html>
+
 
 
 

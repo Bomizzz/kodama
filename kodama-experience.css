@@ -291,3 +291,29 @@ main:has(#welcome:not([hidden])) .welcome-wink {
 
 
 
+
+/* The arms sit below the cheeks and overlap the apple like hands. */
+.guardian-arm {
+  z-index:2; top:76%; width:20%; height:12%;
+  background:linear-gradient(155deg,#fffdfa 18%,#ede4f3 69%,#d4c4e2);
+  box-shadow:0 .16em .24em #72558938;
+}
+.guardian-arm::after { content:none; }
+.guardian-arm-left { left:19%; transform:rotate(22deg); }
+.guardian-arm-right { left:auto; right:19%; transform:rotate(-22deg); }
+.guardian-apple {
+  position:absolute; z-index:1; top:72%; left:50%; width:24%; height:22%;
+  transform:translateX(-50%) rotate(-7deg);
+  border-radius:43% 49% 53% 49% / 42% 43% 60% 59%;
+  background:radial-gradient(ellipse at 27% 24%,#ffd0c5 0%,#f7898c 20%,#dc455b 51%,#ac2640 95%);
+  box-shadow:inset -.1em -.13em .18em #76213955,0 .15em .27em #783a5339;
+}
+.guardian-apple::before {
+  content:""; position:absolute; width:9%; height:30%; left:52%; top:-20%;
+  border-radius:999px; transform:rotate(11deg); background:#65463c;
+}
+.guardian-apple::after {
+  content:""; position:absolute; width:38%; height:25%; left:53%; top:-14%;
+  border-radius:90% 10% 75% 20%; transform:rotate(-14deg);
+  background:linear-gradient(145deg,#c6dea0,#579576);
+}
