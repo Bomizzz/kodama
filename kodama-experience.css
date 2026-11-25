@@ -240,7 +240,7 @@ main .brand span:nth-child(6) { animation-delay:.35s; }
 }
 body:has(#splash:not([hidden])) main:has(#welcome:not([hidden])) :is(.brand span,.welcome-ghost,.welcome-wink) { animation:none; }
 @media(prefers-reduced-motion:reduce) {
-  main:has(#welcome:not([hidden])) header :is(.brand span,.welcome-ghost,.welcome-wink) { animation:none; }
+  main:has(#welcome:not([hidden])) header .brand span { animation:none; }
 }
 
 /* Move one letter at a time and give the guardian a scalloped ghost silhouette. */
@@ -287,6 +287,7 @@ main:has(#welcome:not([hidden])) .welcome-wink {
   main:has(#welcome:not([hidden])) header .welcome-wink { animation:welcome-wink .3s .6s ease-in-out both; }
 }
 @keyframes welcome-fade { from { opacity:0; } to { opacity:1; } }
+
 
 
 
